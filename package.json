@@ -1,6 +1,6 @@
 {
 	"name" : "com.bottinogames.willow.library",
-	"version" : "1.0.1",
+	"version" : "1.0.2",
 	"displayName" : "Willow Library",
 	"description" : "A collection of functions and classes that help me (Alice Bottino) make games faster.",
 	"unity" : "2019.4"
