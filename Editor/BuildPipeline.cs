@@ -52,7 +52,7 @@ public class BuildPipelineWindow : EditorWindow
 
         }
         GUILayout.EndHorizontal();
-
+        
         GUILayout.Space(20);
 
         GUILayout.BeginHorizontal();
@@ -64,19 +64,19 @@ public class BuildPipelineWindow : EditorWindow
 
             if (linS)
             {
-                BuildPipeline.BuildPlayer(levels, $"{path}/{BuildPipelineNamesWindow.LinServerFolder}/{BuildPipelineNamesWindow.ServerExecutableName}.x86_64", BuildTarget.StandaloneLinux64, BuildOptions.EnableHeadlessMode | linRunOption);
+                BuildPipeline.BuildPlayer(levels, $"{path}/{BuildPipelineNamesWindow.LinServerFolder}/{BuildPipelineNamesWindow.ServerExecutableName}.x86_64", BuildTarget.StandaloneLinux64, BuildOptions.EnableHeadlessMode | (run ? linRunOption : BuildOptions.None));
             }
             if (winS)
             {
-                BuildPipeline.BuildPlayer(levels, $"{path}/{BuildPipelineNamesWindow.WinServerFolder}/{BuildPipelineNamesWindow.ServerExecutableName}.exe", BuildTarget.StandaloneWindows64, BuildOptions.EnableHeadlessMode | winRunOption);
+                BuildPipeline.BuildPlayer(levels, $"{path}/{BuildPipelineNamesWindow.WinServerFolder}/{BuildPipelineNamesWindow.ServerExecutableName}.exe", BuildTarget.StandaloneWindows64, BuildOptions.EnableHeadlessMode | (run ? winRunOption : BuildOptions.None));
             }
             if (linC)
             {
-                BuildPipeline.BuildPlayer(levels, $"{path}/{BuildPipelineNamesWindow.LinClientFolder}/{BuildPipelineNamesWindow.ClientExecutableName}.exe", BuildTarget.StandaloneLinux64, linRunOption);
+                BuildPipeline.BuildPlayer(levels, $"{path}/{BuildPipelineNamesWindow.LinClientFolder}/{BuildPipelineNamesWindow.ClientExecutableName}.exe", BuildTarget.StandaloneLinux64, run ? linRunOption : BuildOptions.None);
             }
             if (winC)
             {
-                BuildPipeline.BuildPlayer(levels, $"{path}/{BuildPipelineNamesWindow.WinClientFolder}/{BuildPipelineNamesWindow.ClientExecutableName}.exe", BuildTarget.StandaloneWindows64, winRunOption);
+                BuildPipeline.BuildPlayer(levels, $"{path}/{BuildPipelineNamesWindow.WinClientFolder}/{BuildPipelineNamesWindow.ClientExecutableName}.exe", BuildTarget.StandaloneWindows64, run ? winRunOption : BuildOptions.None);
             }
         }
         run = GUILayout.Toggle(run, "Run");
