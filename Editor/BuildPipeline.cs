@@ -104,22 +104,22 @@ public class BuildPipelineNamesWindow : EditorWindow
     static void UpdateStrings()
     {
         string appname = Application.productName.Replace(" ", "");
-        clientExecutableName = EditorPrefs.GetString("clientExecutableName", appname);
-        serverExecutableName = EditorPrefs.GetString("serverExecutableName", appname + "server");
-        winClientFolder = EditorPrefs.GetString("winClientFolder", "Windows");
-        winServerFolder = EditorPrefs.GetString("winServerFolder", "Windows Server");
-        linClientFolder = EditorPrefs.GetString("linClientFolder", "Linux");
-        linServerFolder = EditorPrefs.GetString("linServerFolder", "Linux Server");
+        clientExecutableName = PlayerPrefs.GetString("editor_buildpipeline_clientExecutableName", appname);
+        serverExecutableName = PlayerPrefs.GetString("editor_buildpipeline_serverExecutableName", appname + "server");
+        winClientFolder = PlayerPrefs.GetString("editor_buildpipeline_winClientFolder", "Windows");
+        winServerFolder = PlayerPrefs.GetString("editor_buildpipeline_winServerFolder", "Windows Server");
+        linClientFolder = PlayerPrefs.GetString("editor_buildpipeline_linClientFolder", "Linux");
+        linServerFolder = PlayerPrefs.GetString("editor_buildpipeline_linServerFolder", "Linux Server");
     }
 
     static void PushStrings()
     {
-        EditorPrefs.SetString("clientExecutableName", clientExecutableName);
-        EditorPrefs.SetString("serverExecutableName", serverExecutableName);
-        EditorPrefs.SetString("winClientFolder", winClientFolder);
-        EditorPrefs.SetString("winServerFolder", winServerFolder);
-        EditorPrefs.SetString("linClientFolder", linClientFolder);
-        EditorPrefs.SetString("linServerFolder", linServerFolder);
+        PlayerPrefs.SetString("editor_buildpipeline_clientExecutableName", clientExecutableName);
+        PlayerPrefs.SetString("editor_buildpipeline_serverExecutableName", serverExecutableName);
+        PlayerPrefs.SetString("editor_buildpipeline_winClientFolder", winClientFolder);
+        PlayerPrefs.SetString("editor_buildpipeline_winServerFolder", winServerFolder);
+        PlayerPrefs.SetString("editor_buildpipeline_linClientFolder", linClientFolder);
+        PlayerPrefs.SetString("editor_buildpipeline_linServerFolder", linServerFolder);
     }
 
     public static void ShowWindow(Vector2 position) 
