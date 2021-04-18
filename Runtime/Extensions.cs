@@ -53,6 +53,16 @@ namespace Willow.Library
         }
 
         /// <summary>
+        /// Returns the float clamped between 1 and -1.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static float Clamp11(this float value)
+        {
+            return Mathf.Clamp(value, -1, 1);
+        }
+
+        /// <summary>
         /// Remaps a range of numbers to 0-1.
         /// </summary>
         /// <param name="value"></param>
