@@ -64,19 +64,19 @@ public class BuildPipelineWindow : EditorWindow
 
             if (linS)
             {
-                BuildPipeline.BuildPlayer(levels, path + "/Project-Community-Server/projectcommunityserver.x86_64", BuildTarget.StandaloneLinux64, BuildOptions.EnableHeadlessMode | linRunOption);
+                BuildPipeline.BuildPlayer(levels, $"{path}/{BuildPipelineNamesWindow.LinServerFolder}/{BuildPipelineNamesWindow.ServerExecutableName}.x86_64", BuildTarget.StandaloneLinux64, BuildOptions.EnableHeadlessMode | linRunOption);
             }
             if (winS)
             {
-                BuildPipeline.BuildPlayer(levels, path + "/Windows-Server/projectcommunityserver.exe", BuildTarget.StandaloneWindows64, BuildOptions.EnableHeadlessMode | winRunOption);
+                BuildPipeline.BuildPlayer(levels, $"{path}/{BuildPipelineNamesWindow.WinServerFolder}/{BuildPipelineNamesWindow.ServerExecutableName}.exe", BuildTarget.StandaloneWindows64, BuildOptions.EnableHeadlessMode | winRunOption);
             }
             if (linC)
             {
-
+                BuildPipeline.BuildPlayer(levels, $"{path}/{BuildPipelineNamesWindow.LinClientFolder}/{BuildPipelineNamesWindow.ClientExecutableName}.exe", BuildTarget.StandaloneLinux64, linRunOption);
             }
             if (winC)
             {
-                BuildPipeline.BuildPlayer(levels, path + "/Windows/projectcommunity.exe", BuildTarget.StandaloneWindows64, winRunOption);
+                BuildPipeline.BuildPlayer(levels, $"{path}/{BuildPipelineNamesWindow.WinClientFolder}/{BuildPipelineNamesWindow.ClientExecutableName}.exe", BuildTarget.StandaloneWindows64, winRunOption);
             }
         }
         run = GUILayout.Toggle(run, "Run");
