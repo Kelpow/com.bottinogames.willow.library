@@ -27,8 +27,8 @@ namespace Willow.Library.Editor
                 window.names[i] = split[split.Length - 1].Replace("com.bottinogames.", "").Replace(".git", "") ;
             }
 
-            window.minSize = new Vector2(500f, 200f);
-            window.maxSize = new Vector2(500f, 1000f);
+            window.minSize = new Vector2(250f, 200f);
+            window.maxSize = new Vector2(250f, 1000f);
             window.ShowUtility();
         }
 
