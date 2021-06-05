@@ -20,22 +20,30 @@ namespace Willow.Library.Editor
             );
 
             window.packageURLs = GetPackageURLsListedInTXTRecord("packages.bottino.games");
+            window.names = new string[window.packageURLs.Length];
+            for (int i = 0; i < window.packageURLs.Length; i++)
+            {
+                string[] split = window.packageURLs[i].Split('/');
+                window.names[i] = split[split.Length - 1].Replace("com.bottinogames.", "").Replace(".git", "") ;
+            }
+
             window.minSize = new Vector2(500f, 200f);
             window.maxSize = new Vector2(500f, 1000f);
             window.ShowUtility();
         }
 
         public string[] packageURLs;
+        public string[] names;
         Vector2 scrollpos;
         private void OnGUI()
         {
             scrollpos = EditorGUILayout.BeginScrollView(scrollpos);
 
-            foreach(string s in packageURLs)
+            for (int i = 0; i < packageURLs.Length; i++)
             {
-                if (GUILayout.Button(s))
+                if (GUILayout.Button(names[i]))
                 {
-                    Client.Add(s);
+                    Client.Add(packageURLs[i]);
                 }
             }
 
