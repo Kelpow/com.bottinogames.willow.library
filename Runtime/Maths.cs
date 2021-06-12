@@ -41,6 +41,19 @@ namespace Willow
         /// <param name="lambda">The strength of the dampening, between 0 and float.PositiveInfinity</param>
         /// <param name="isRealtime"> Whether the damping should be effected by Time.timeScale</param>
         /// <returns></returns>
+        public static float Damp(float from, float to, float lambda, float dt)
+        {
+            return Mathf.Lerp(from, to, 1 - Mathf.Exp(-lambda * dt));
+        }
+
+        /// <summary>
+        /// a frame-independant alternative to Lerp
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="lambda">The strength of the dampening, between 0 and float.PositiveInfinity</param>
+        /// <param name="isRealtime"> Whether the damping should be effected by Time.timeScale</param>
+        /// <returns></returns>
         public static float Damp(float from, float to, float lambda, bool isRealtime = false)
         {
             float dt = isRealtime ? Time.unscaledDeltaTime : Time.deltaTime;
