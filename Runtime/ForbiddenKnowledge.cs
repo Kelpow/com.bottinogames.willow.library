@@ -1,9 +1,11 @@
+using UnityEngine;
 using System;
 
 namespace Willow.Library
 {
     public static class ForbiddenKnowledge
     {
+        #region Cursed Date
         static DateTime January(this int year, int day)
         {
             return new DateTime(year, 1, day);
@@ -52,5 +54,27 @@ namespace Willow.Library
         {
             return new DateTime(year, 12, day);
         }
+        #endregion
+
+
+        #region Big Shit
+        private static GUIContent BIGSHITCONTENT = new GUIContent();
+        private static GUIStyle BIGSHITSTYLE = new GUIStyle();
+        public static void GUIDrawBigShit(string text)
+        {
+            BIGSHITCONTENT.text = text;
+
+            BIGSHITSTYLE.alignment = TextAnchor.MiddleCenter;
+
+            BIGSHITSTYLE.fontSize = 100;
+
+            float lengthAt100 = BIGSHITSTYLE.CalcSize(BIGSHITCONTENT).x;
+            float widthLengthRatio = Screen.width / lengthAt100;
+
+            BIGSHITSTYLE.fontSize = (int)(100f * widthLengthRatio);
+            GUI.Label(new Rect(0, 0, Screen.width, Screen.height), text, BIGSHITSTYLE);
+
+        }
+        #endregion
     }
 }
