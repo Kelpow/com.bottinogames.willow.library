@@ -72,7 +72,7 @@ namespace Willow.Library
             float widthLengthRatio = Screen.width / lengthAt100;
 
             BIGSHITSTYLE.fontSize = (int)(100f * widthLengthRatio);
-            GUI.Label(new Rect(0, 0, Screen.width, Screen.height), text, BIGSHITSTYLE);
+            UnityEngine.GUI.Label(new Rect(0, 0, Screen.width, Screen.height), text, BIGSHITSTYLE);
 
         }
         #endregion
