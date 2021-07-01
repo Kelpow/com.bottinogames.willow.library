@@ -6,11 +6,11 @@ namespace Willow
 {
     public static class GUI
     {
-        public void OutlinedLable(string text, GUIStyle style, Color foreground, Color background, params GUILayoutOption[] options)
+        public static void OutlinedLable(string text, GUIStyle style, Color foreground, Color background, params GUILayoutOption[] options)
         {
             OutlinedLable(new GUIContent(text), style, foreground, background, options);
         }
-        public void OutlinedLable(GUIContent content, GUIStyle style, Color foreground, Color background, params GUILayoutOption[] options)
+        public static void OutlinedLable(GUIContent content, GUIStyle style, Color foreground, Color background, params GUILayoutOption[] options)
         {
             style.normal.textColor = background;
 
