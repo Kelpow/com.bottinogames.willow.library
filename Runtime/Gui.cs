@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Willow
 {
-    public class GUI
+    public static class GUI
     {
         public void OutlinedLable(string text, GUIStyle style, Color foreground, Color background, params GUILayoutOption[] options)
         {
