@@ -151,7 +151,7 @@ namespace Willow
         /// <returns></returns>
         public static Vector3 SDampUnclamped(Vector3 from, Vector3 to, float lambda, float dt)
         {
-            return Vector3.Slerp(from, to, 1 - Mathf.Exp(-lambda * dt));
+            return Vector3.SlerpUnclamped(from, to, 1 - Mathf.Exp(-lambda * dt));
         }
         /// <summary>
         /// a frame-independant alternative to Slerp
@@ -164,7 +164,7 @@ namespace Willow
         public static Vector3 SDampUnclamped(Vector3 from, Vector3 to, float lambda, bool isRealtime = false)
         {
             float dt = isRealtime ? Time.unscaledDeltaTime : Time.deltaTime;
-            return Vector3.Slerp(from, to, 1 - Mathf.Exp(-lambda * dt));
+            return Vector3.SlerpUnclamped(from, to, 1 - Mathf.Exp(-lambda * dt));
         }
 
         /// <summary>
