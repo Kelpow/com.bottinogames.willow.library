@@ -19,21 +19,19 @@ namespace Willow.Library.Editor
                 title: "Alices Package Updater"
             );
 
-            window.packageURLs = GetPackageURLsListedInTXTRecord("packages.bottino.games");
-            window.names = new string[window.packageURLs.Length];
-            for (int i = 0; i < window.packageURLs.Length; i++)
-            {
-                string[] split = window.packageURLs[i].Split('/');
-                window.names[i] = split[split.Length - 1].Replace("com.bottinogames.", "").Replace(".git", "") ;
-            }
-
             window.minSize = new Vector2(250f, 200f);
             window.maxSize = new Vector2(250f, 1000f);
             window.ShowUtility();
         }
 
-        public string[] packageURLs;
-        public string[] names;
+        public string[] packageURLs = {
+            "https://github.com/Kelpow/com.bottinogames.willow.library.git",
+            "https://github.com/Kelpow/com.bottinogames.tatting.git"
+        };
+        public string[] names = {
+            "Willow Library",
+            "Tatting Mesh Text"
+        };
         Vector2 scrollpos;
         private void OnGUI()
         {
@@ -53,38 +51,38 @@ namespace Willow.Library.Editor
 
 
 
+        // Saving this code for posterities sake, for we must learn from the fools so we may evade their shared fate
+
+        ////ripped some code from https://localcoders.blogspot.com/2016/06/getting-dns-txt-record-using-c.html
+        //private static string[] /*IList<string>*/ GetPackageURLsListedInTXTRecord(string hostname)
+        //{
+
+        //    IList<string> txtRecords = new List<string>();
+
+        //    string output;
+
+        //    var startInfo = new ProcessStartInfo("nslookup");
+
+        //    startInfo.Arguments = string.Format("-type=TXT {0}", hostname);
+
+        //    startInfo.RedirectStandardOutput = true;
+
+        //    startInfo.UseShellExecute = false;
+
+        //    startInfo.WindowStyle = ProcessWindowStyle.Hidden;
 
 
-        //ripped some code from https://localcoders.blogspot.com/2016/06/getting-dns-txt-record-using-c.html
-        private static string[] /*IList<string>*/ GetPackageURLsListedInTXTRecord(string hostname)
-        {
+        //    using (var cmd = Process.Start(startInfo))
 
-            IList<string> txtRecords = new List<string>();
+        //    {
 
-            string output;
+        //        output = cmd.StandardOutput.ReadToEnd();
 
-            var startInfo = new ProcessStartInfo("nslookup");
+        //    }
 
-            startInfo.Arguments = string.Format("-type=TXT {0}", hostname);
-
-            startInfo.RedirectStandardOutput = true;
-
-            startInfo.UseShellExecute = false;
-
-            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-
-
-            using (var cmd = Process.Start(startInfo))
-
-            {
-
-                output = cmd.StandardOutput.ReadToEnd();
-
-            }
-
-            string identifier = "packages.bottino.games	text =";
-            return output.Remove(0, output.IndexOf(identifier) + identifier.Length).Trim().Trim('"').Split(',');
-        }
+        //    string identifier = "packages.bottino.games	text =";
+        //    return output.Remove(0, output.IndexOf(identifier) + identifier.Length).Trim().Trim('"').Split(',');
+        //}
     }
 
     
