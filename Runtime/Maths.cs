@@ -40,6 +40,33 @@ namespace Willow
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <param name="lambda">The strength of the dampening, between 0 and float.PositiveInfinity</param>
+        /// <param name="dt">The delta-time. Ususally Time.deltaTime</param>
+        /// <returns></returns>
+        public static Vector3 DampUnclamped(Vector3 from, Vector3 to, float lambda, float dt)
+        {
+            return Vector3.LerpUnclamped(from, to, 1 - Mathf.Exp(-lambda * dt));
+        }
+
+        /// <summary>
+        /// a frame-independant alternative to Lerp
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="lambda">The strength of the dampening, between 0 and float.PositiveInfinity</param>
+        /// <param name="isRealtime"> Whether the damping should be effected by Time.timeScale</param>
+        /// <returns></returns>
+        public static Vector3 DampUnclamped(Vector3 from, Vector3 to, float lambda, bool isRealtime = false)
+        {
+            float dt = isRealtime ? Time.unscaledDeltaTime : Time.deltaTime;
+            return Vector3.LerpUnclamped(from, to, 1 - Mathf.Exp(-lambda * dt));
+        }
+
+        /// <summary>
+        /// a frame-independant alternative to Lerp
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="lambda">The strength of the dampening, between 0 and float.PositiveInfinity</param>
         /// <param name="isRealtime"> Whether the damping should be effected by Time.timeScale</param>
         /// <returns></returns>
         public static float Damp(float from, float to, float lambda, float dt)
@@ -59,6 +86,33 @@ namespace Willow
         {
             float dt = isRealtime ? Time.unscaledDeltaTime : Time.deltaTime;
             return Mathf.Lerp(from, to, 1 - Mathf.Exp(-lambda * dt));
+        }
+        
+        /// <summary>
+        /// a frame-independant alternative to Lerp
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="lambda">The strength of the dampening, between 0 and float.PositiveInfinity</param>
+        /// <param name="isRealtime"> Whether the damping should be effected by Time.timeScale</param>
+        /// <returns></returns>
+        public static float DampUnclamped(float from, float to, float lambda, float dt)
+        {
+            return Mathf.LerpUnclamped(from, to, 1 - Mathf.Exp(-lambda * dt));
+        }
+
+        /// <summary>
+        /// a frame-independant alternative to Lerp
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="lambda">The strength of the dampening, between 0 and float.PositiveInfinity</param>
+        /// <param name="isRealtime"> Whether the damping should be effected by Time.timeScale</param>
+        /// <returns></returns>
+        public static float DampUnclamped(float from, float to, float lambda, bool isRealtime = false)
+        {
+            float dt = isRealtime ? Time.unscaledDeltaTime : Time.deltaTime;
+            return Mathf.LerpUnclamped(from, to, 1 - Mathf.Exp(-lambda * dt));
         }
 
         /// <summary>
@@ -82,6 +136,32 @@ namespace Willow
         /// <param name="isRealtime"> Whether the damping should be effected by Time.timeScale</param>
         /// <returns></returns>
         public static Vector3 SDamp(Vector3 from, Vector3 to, float lambda, bool isRealtime = false)
+        {
+            float dt = isRealtime ? Time.unscaledDeltaTime : Time.deltaTime;
+            return Vector3.Slerp(from, to, 1 - Mathf.Exp(-lambda * dt));
+        }
+        
+        /// <summary>
+        /// a frame-independant alternative to Slerp
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="lambda">The strength of the dampening, between 0 and float.PositiveInfinity</param>
+        /// <param name="dt">The delta-time. Ususally Time.deltaTime</param>
+        /// <returns></returns>
+        public static Vector3 SDampUnclamped(Vector3 from, Vector3 to, float lambda, float dt)
+        {
+            return Vector3.Slerp(from, to, 1 - Mathf.Exp(-lambda * dt));
+        }
+        /// <summary>
+        /// a frame-independant alternative to Slerp
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="lambda">The strength of the dampening, between 0 and float.PositiveInfinity</param>
+        /// <param name="isRealtime"> Whether the damping should be effected by Time.timeScale</param>
+        /// <returns></returns>
+        public static Vector3 SDampUnclamped(Vector3 from, Vector3 to, float lambda, bool isRealtime = false)
         {
             float dt = isRealtime ? Time.unscaledDeltaTime : Time.deltaTime;
             return Vector3.Slerp(from, to, 1 - Mathf.Exp(-lambda * dt));
@@ -112,6 +192,33 @@ namespace Willow
             float dt = isRealtime ? Time.unscaledDeltaTime : Time.deltaTime;
             return Quaternion.Slerp(from, to, 1 - Mathf.Exp(-lambda * dt));
         }
+        
+        /// <summary>
+        /// a frame-independant alternative to Slerp
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="lambda">The strength of the dampening, between 0 and float.PositiveInfinity</param>
+        /// <param name="dt">The delta-time. Ususally Time.deltaTime</param>
+        /// <returns></returns>
+        public static Quaternion SDampUnclamped(Quaternion from, Quaternion to, float lambda, float dt)
+        {
+            return Quaternion.SlerpUnclamped(from, to, 1 - Mathf.Exp(-lambda * dt));
+        }
+        /// <summary>
+        /// a frame-independant alternative to Slerp
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="lambda">The strength of the dampening, between 0 and float.PositiveInfinity</param>
+        /// <param name="isRealtime"> Whether the damping should be effected by Time.timeScale</param>
+        /// <returns></returns>
+        public static Quaternion SDampUnclamped(Quaternion from, Quaternion to, float lambda, bool isRealtime = false)
+        {
+            float dt = isRealtime ? Time.unscaledDeltaTime : Time.deltaTime;
+            return Quaternion.SlerpUnclamped(from, to, 1 - Mathf.Exp(-lambda * dt));
+        }
+
         #endregion
         #region ====Bezier====
         public static Vector3 Bezier(Vector3 a, Vector3 b, Vector3 c, float t)
