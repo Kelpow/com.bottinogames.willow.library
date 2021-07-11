@@ -82,5 +82,18 @@ namespace Willow.Library
             return Mathf.Abs(value);
         }
         #endregion
+
+        #region Audio
+        public static bool SetLinearVolume(this UnityEngine.Audio.AudioMixer mixer, string name, float volume)
+        {
+            float dB;
+            if (volume > 0)
+                dB = 20.0f * Mathf.Log10(volume);
+            else
+                dB = -144.0f;
+            
+            return mixer.SetFloat(name, dB);
+        }
+        #endregion
     }
 }
