@@ -42,6 +42,8 @@ public class CursorTool : EditorTool
             Vector3 diff = position - newPivot;
 
             target.position += diff;
+
+            EditorUtility.SetDirty(target);
         }
 
 
