@@ -43,7 +43,7 @@ public class CursorTool : EditorTool
 
             target.position += diff;
 
-            EditorUtility.SetDirty(target);
+            EditorUtility.SetDirty(target.gameObject);
         }
 
 
