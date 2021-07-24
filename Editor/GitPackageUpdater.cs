@@ -36,18 +36,26 @@ namespace Willow.Library.Editor
         };
 
 
+        public bool alicesPackages = true;
+
         Vector2 scrollpos;
         private void OnGUI()
         {
             scrollpos = EditorGUILayout.BeginScrollView(scrollpos);
 
-            for (int i = 0; i < packageURLs.Length; i++)
+            alicesPackages = EditorGUILayout.BeginFoldoutHeaderGroup(alicesPackages, "Alice's Packages");
+            if(alicesPackages)
             {
-                if (GUILayout.Button(names[i]))
+                for (int i = 0; i < packageURLs.Length; i++)
                 {
-                    Client.Add(packageURLs[i]);
+                    if (GUILayout.Button(names[i]))
+                    {
+                        Client.Add(packageURLs[i]);
+                    }
                 }
             }
+            EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+
 
             EditorGUILayout.EndScrollView();
         }
