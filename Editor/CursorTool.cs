@@ -7,24 +7,27 @@ using UnityEditor.EditorTools;
 [EditorTool("3D Cursor Tool")]
 public class CursorTool : EditorTool
 {
-    bool init;
+    Transform target;
     Vector3 position;
 
     public override void OnToolGUI(EditorWindow window)
     {
         base.OnToolGUI(window);
-        Transform target = Selection.activeTransform;
-        if (!target)
+
+        Transform active = Selection.activeTransform;
+        if(active)
         {
-            init = false;
+            if(target != active)
+            {
+                target = active;
+                position = target.position;
+            }
+        } else
+        {
+            target = null;
             return;
         }
 
-        if (!init)
-        {
-            position = target.position;
-            init = true;
-        }
         Quaternion rotation = target.rotation;
         float scale = 1f;
 
