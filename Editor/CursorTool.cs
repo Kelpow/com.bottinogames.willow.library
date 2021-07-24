@@ -33,6 +33,8 @@ public class CursorTool : EditorTool
 
         if (EditorGUI.EndChangeCheck())
         {
+            Undo.RecordObject(target, "3D Cursor Tool");
+
             Vector3 localPivot = target.InverseTransformPoint(position);
 
             target.rotation = rotation;
@@ -42,8 +44,6 @@ public class CursorTool : EditorTool
             Vector3 diff = position - newPivot;
 
             target.position += diff;
-
-            EditorUtility.SetDirty(target.gameObject);
         }
 
 
