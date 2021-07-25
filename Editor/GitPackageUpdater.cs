@@ -27,12 +27,14 @@ namespace Willow.Library.Editor
         public string[] packageURLs = {
             "https://github.com/Kelpow/com.bottinogames.willow.library.git",
             "https://github.com/Kelpow/com.bottinogames.tatting.git",
-            "https://github.com/Kelpow/com.bottinogames.arachnid.git"
+            "https://github.com/Kelpow/com.bottinogames.arachnid.git",
+            "https://github.com/Kelpow/com.bottinogames.psyche.git"
         };
         public string[] names = {
             "Willow Library",
             "Tatting Mesh Text",
-            "Arachnid WebGL" 
+            "Arachnid WebGL",
+            "Psyche"
         };
 
 
