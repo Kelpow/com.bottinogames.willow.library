@@ -95,5 +95,21 @@ namespace Willow.Library
             return mixer.SetFloat(name, dB);
         }
         #endregion
+
+        #region Misc
+        public static bool MouseOverlapsBounds(this Camera camera, Bounds bounds, Transform parent)
+        {
+            Vector3 position = parent ? parent.position : Vector3.zero;
+            Quaternion rotation = parent ? parent.rotation : Quaternion.identity;
+
+            Ray mouseray = camera.ScreenPointToRay(Input.mousePosition);
+            Vector3 relativePos = mouseray.origin - position;
+            Ray rotatedRay = new Ray(
+                Quaternion.Inverse(rotation) * relativePos,
+                Quaternion.Inverse(rotation) * mouseray.direction);
+            Debug.Log(parent.lossyScale);
+            return bounds.IntersectRay(rotatedRay);
+        }
+        #endregion
     }
 }

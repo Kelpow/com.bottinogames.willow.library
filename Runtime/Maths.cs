@@ -234,5 +234,50 @@ namespace Willow
             return Vector3.Lerp(p0, p1, t);
         }
         #endregion
+
+        /// <summary> Returns the nearest point on line segment AB to point P. </summary>
+        public static Vector3 NearestPointOnLine (Vector3 a, Vector3 b, Vector3 p)
+        {
+            float t = Vector3.Dot(b - a, p - a) / (b - a).sqrMagnitude;
+            if (t <= 0)
+                return a;
+            else if (t >= 1)
+                return b;
+            else
+                return Vector3.Lerp(a, b, t);
+        }
+
+        public static Vector3 Barycentric(Vector2 a, Vector2 b, Vector2 c, Vector2 p)
+        {
+            Vector3 bary = new Vector3();
+
+            Vector2 lb = b - a;
+            Vector2 lc = c - a;
+            Vector2 lp = p - a;
+            float denominatorReciprocal = 1/(lb.x * lc.y - lc.x * lb.y);
+
+            bary.y = (lp.x * lc.y - lc.x * lp.y) * denominatorReciprocal;
+            bary.z = (lb.x * lp.y - lp.x * lb.y) * denominatorReciprocal;
+            bary.x = 1f - bary.y - bary.z;
+
+            return bary;
+        }
+
+        public static Vector3 Barycentric(Vector3 a, Vector3 b, Vector3 c, Vector3 p)
+        {
+            Vector3 v0 = b - a, v1 = c - a, v2 = p - a;
+            float d00 = Vector3.Dot(v0, v0);
+            float d01 = Vector3.Dot(v0, v1);
+            float d11 = Vector3.Dot(v1, v1);
+            float d20 = Vector3.Dot(v2, v0);
+            float d21 = Vector3.Dot(v2, v1);
+            float denomReciprocal = 1/(d00 * d11 - d01 * d01);
+
+            Vector3 bary = new Vector3();
+            bary.y = (d11 * d20 - d01 * d21) * denomReciprocal;
+            bary.z = (d00 * d21 - d01 * d20) * denomReciprocal;
+            bary.x = 1.0f - bary.y - bary.z;
+            return bary;
+        }
     }
 }
