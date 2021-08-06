@@ -111,7 +111,6 @@ namespace Willow.Library
             Ray rotatedRay = new Ray(
                 Quaternion.Inverse(rotation) * relativePos,
                 Quaternion.Inverse(rotation) * mouseray.direction);
-            Debug.Log(parent.lossyScale);
             
             bool hit = bounds.IntersectRay(rotatedRay, out float distance);
 
