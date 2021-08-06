@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,8 @@ using Willow.Library;
 
 public class AudioManager : MonoBehaviour
 {
+    const string VOLUME_SAVE_STRING = "WillowAudioManager_";
+
     public enum AudioChannel
     {
         Master,
@@ -13,11 +16,27 @@ public class AudioManager : MonoBehaviour
         Music,
         Dialogue,
         Voice,
-        
     }
 
     public static AudioManager instance;
-    public void Awake() { if (instance) { Destroy(this); } else { instance = this; DontDestroyOnLoad(this.gameObject); } }
+    public void Awake() {
+        if (instance)
+        {
+            Destroy(this);
+            return;
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+
+        foreach(AudioChannel channel in (AudioChannel[])Enum.GetValues(typeof(AudioChannel)))
+        {
+            string name = channel.ToString();
+            SetVolume(name, PlayerPrefs.GetFloat(VOLUME_SAVE_STRING + name, 1f));
+        }
+    }
 
 
     public AudioMixer mixer;
@@ -27,7 +46,7 @@ public class AudioManager : MonoBehaviour
         SetVolume(channel.ToString(), volume);
     }
 
-    public static void SetVolume(string channel, float volume)
+    private static void SetVolume(string channel, float volume)
     {
         if (instance)
         {
@@ -35,6 +54,7 @@ public class AudioManager : MonoBehaviour
             {
                 if (instance.mixer.GetFloat(channel, out float v))
                 {
+                    PlayerPrefs.SetFloat(VOLUME_SAVE_STRING + channel, 1f);
                     instance.mixer.SetLinearVolume(channel, volume);
                 }
                 else
