@@ -66,4 +66,15 @@ public class AudioManager : MonoBehaviour
         else
             Debug.LogWarning("No AudioManager object exists in the scene!");
     }
+
+    
+    public static float GetVolume(AudioChannel channel)
+    {
+        return GetVolume(channel.ToString());
+    }
+
+    private static float GetVolume(string channel)
+    {
+        return PlayerPrefs.GetFloat(VOLUME_SAVE_STRING + channel, 1f);
+    }
 }
