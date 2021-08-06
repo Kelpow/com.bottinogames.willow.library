@@ -97,7 +97,11 @@ namespace Willow.Library
         #endregion
 
         #region Misc
-        public static bool MouseOverlapsBounds(this Camera camera, Bounds bounds, Transform parent)
+        public static bool MouseOverlapsBounds(this Camera camera, Bounds bounds, Transform parent = null)
+        {
+            return MouseOverlapsBounds(camera, bounds, out Vector3 throwAwayVector, parent);
+        }
+        public static bool MouseOverlapsBounds(this Camera camera, Bounds bounds, out Vector3 localIntersectionPoint, Transform parent = null)
         {
             Vector3 position = parent ? parent.position : Vector3.zero;
             Quaternion rotation = parent ? parent.rotation : Quaternion.identity;
@@ -108,7 +112,12 @@ namespace Willow.Library
                 Quaternion.Inverse(rotation) * relativePos,
                 Quaternion.Inverse(rotation) * mouseray.direction);
             Debug.Log(parent.lossyScale);
-            return bounds.IntersectRay(rotatedRay);
+            
+            bool hit = bounds.IntersectRay(rotatedRay, out float distance);
+
+            localIntersectionPoint = rotatedRay.GetPoint(distance);
+
+            return hit;
         }
         #endregion
     }
