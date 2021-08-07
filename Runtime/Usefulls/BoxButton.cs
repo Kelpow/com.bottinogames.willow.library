@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Willow.Library;
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
@@ -23,13 +24,7 @@ public class BoxButton : MonoBehaviour
     {
         if(onClickDown != null && camera != null && Input.GetMouseButtonDown(0))
         {
-            Ray mouseray = camera.ScreenPointToRay(Input.mousePosition);
-            Vector3 relativePos = mouseray.origin - transform.position;
-            Ray rotatedRay = new Ray(
-                Quaternion.Inverse(transform.rotation) * relativePos,
-                Quaternion.Inverse(transform.rotation) * mouseray.direction);
-
-            if (bounds.IntersectRay(rotatedRay))
+            if (camera.MouseOverlapsBounds(bounds))
                 onClickDown.Invoke();
         }
     }
@@ -56,7 +51,7 @@ public class BoxButtonInspector : Editor
     {
         BoxButton button = (BoxButton)target;
 
-        Matrix4x4 rotatedMatrix = Handles.matrix * Matrix4x4.TRS(button.transform.position, button.transform.rotation, Vector3.one);
+        Matrix4x4 rotatedMatrix = button.transform.localToWorldMatrix;
         using (new Handles.DrawingScope(rotatedMatrix))
         {
             Undo.RecordObject(button, "BoxButton Bounds Handle");

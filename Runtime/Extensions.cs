@@ -103,18 +103,15 @@ namespace Willow.Library
         }
         public static bool MouseOverlapsBounds(this Camera camera, Bounds bounds, out Vector3 localIntersectionPoint, Transform parent = null)
         {
-            Vector3 position = parent ? parent.position : Vector3.zero;
-            Quaternion rotation = parent ? parent.rotation : Quaternion.identity;
+            Ray mouseray = camera.ScreenPointToRay(Input.mousePosition);    
 
-            Ray mouseray = camera.ScreenPointToRay(Input.mousePosition);
-            Vector3 relativePos = mouseray.origin - position;
-            Ray rotatedRay = new Ray(
-                Quaternion.Inverse(rotation) * relativePos,
-                Quaternion.Inverse(rotation) * mouseray.direction);
-            
-            bool hit = bounds.IntersectRay(rotatedRay, out float distance);
+            Ray transformedRay = new Ray(
+                parent.InverseTransformPoint(mouseray.origin),
+                parent.InverseTransformVector(mouseray.direction));
 
-            localIntersectionPoint = rotatedRay.GetPoint(distance);
+            bool hit = bounds.IntersectRay(transformedRay, out float distance);
+
+            localIntersectionPoint = transformedRay.GetPoint(distance);
 
             return hit;
         }
