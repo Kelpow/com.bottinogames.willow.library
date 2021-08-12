@@ -12,6 +12,8 @@ public class FullOrbitCamera : MonoBehaviour
     public float smoothing = 2f;
     [Range(0f, 90f)]
     public float verticalClamping = 85f;
+    [Range(0f, 360f)]
+    public float horizontalClamping = 360f;
 
     public Transform target;
 
@@ -31,8 +33,12 @@ public class FullOrbitCamera : MonoBehaviour
     {
         if (Input.GetMouseButton(2))
         {
-            Debug.Log("Test");
             targetX += Input.GetAxisRaw("Mouse X");
+            if (horizontalClamping != 360f)
+            {
+                targetX = Mathf.Clamp(targetX, -horizontalClamping, horizontalClamping);
+            }
+
             targetY += Input.GetAxisRaw("Mouse Y");
             targetY = Mathf.Clamp(targetY, -verticalClamping, verticalClamping);
         }
