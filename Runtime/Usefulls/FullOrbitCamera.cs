@@ -31,17 +31,18 @@ public class FullOrbitCamera : MonoBehaviour
     {
         if (Input.GetMouseButton(2))
         {
-                targetX += Input.GetAxisRaw("Mouse X");
-                targetY += Input.GetAxisRaw("Mouse Y");
-                targetY = Mathf.Clamp(targetY, -verticalClamping, verticalClamping);
+            Debug.Log("Test");
+            targetX += Input.GetAxisRaw("Mouse X");
+            targetY += Input.GetAxisRaw("Mouse Y");
+            targetY = Mathf.Clamp(targetY, -verticalClamping, verticalClamping);
         }
 
-        Willow.Maths.Damp(x, targetX, smoothing * smoothing, true);
-        Willow.Maths.Damp(y, targetY, smoothing * smoothing, true);
+        x = Willow.Maths.Damp(x, targetX, smoothing * smoothing, true);
+        y = Willow.Maths.Damp(y, targetY, smoothing * smoothing, true);
 
         transform.rotation = Quaternion.Euler(-y, x, 0f);
 
         Vector3 targetPos = target ? target.position : targetFallback;
-        transform.position = transform.forward * -dist;
+        transform.position = targetPos + transform.forward * -dist;
     }
 }
