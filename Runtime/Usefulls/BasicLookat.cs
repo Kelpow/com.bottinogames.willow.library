@@ -12,7 +12,7 @@ public class BasicLookat : MonoBehaviour
     public bool runInEditMode = false;
 #endif
 
-    void Update()
+    void LateUpdate()
     {
 #if UNITY_EDITOR
         if (!runInEditMode && !Application.isPlaying)
