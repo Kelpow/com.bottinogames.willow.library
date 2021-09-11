@@ -43,8 +43,8 @@ public class FullOrbitCamera : MonoBehaviour
             targetY = Mathf.Clamp(targetY, -verticalClamping, verticalClamping);
         }
 
-        x = Willow.Maths.Damp(x, targetX, smoothing * smoothing, true);
-        y = Willow.Maths.Damp(y, targetY, smoothing * smoothing, true);
+        x = Maths.Damp(x, targetX, smoothing * smoothing, true);
+        y = Maths.Damp(y, targetY, smoothing * smoothing, true);
 
         transform.rotation = Quaternion.Euler(-y, x, 0f);
 
