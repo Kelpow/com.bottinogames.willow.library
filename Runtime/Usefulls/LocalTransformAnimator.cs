@@ -69,6 +69,9 @@ public struct AnimationAxis
             case Mode.Triangle:
                 t = Triangle(t);
                 break;
+            case Mode.Static:
+                t = 1f;
+                break;
         }
 
         return t * scale;
@@ -79,7 +82,8 @@ public struct AnimationAxis
         Constant,
         Sin,
         Saw,
-        Triangle
+        Triangle,
+        Static
     }
     private static float Constant(float t) { return t; }
     private static float Sin(float t) { return Mathf.Sin(t * Mathf.PI); }
