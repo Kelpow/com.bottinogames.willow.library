@@ -26,6 +26,11 @@ public class FullOrbitCamera : MonoBehaviour
     [Range(0f, 360f)]
     public float horizontalClamping = 360f;
 
+    
+    [Space(5)]
+    
+
+    [Space(10)]
     public Transform target;
 
     private Vector3 targetFallback;
@@ -39,6 +44,7 @@ public class FullOrbitCamera : MonoBehaviour
     private void Start()
     {
         targetFallback = transform.position;
+        z = dist;
     }
 
     void Update()
@@ -65,11 +71,8 @@ public class FullOrbitCamera : MonoBehaviour
         if (allowZoom)
         {
             dist = Mathf.Clamp(dist + -Input.mouseScrollDelta.y * 0.5f, minZoomDist, maxZoomDist);
-            z = Maths.Damp(z, dist, smoothing * smoothing, true);
-        } else
-        {
-            z = dist;
         }
+        z = Maths.Damp(z, dist, smoothing * smoothing, true);
 
         transform.position = targetPos + transform.forward * -z;
     }
