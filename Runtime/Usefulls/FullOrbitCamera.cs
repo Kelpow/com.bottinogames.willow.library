@@ -26,9 +26,10 @@ public class FullOrbitCamera : MonoBehaviour
     [Range(0f, 360f)]
     public float horizontalClamping = 360f;
 
-    
+
     [Space(5)]
-    
+    public float orbitSensitivity = 1f;
+    public float zoomSensitivity = 1f;
 
     [Space(10)]
     public Transform target;
@@ -51,13 +52,13 @@ public class FullOrbitCamera : MonoBehaviour
     {
         if (Input.GetMouseButton(2))
         {
-            targetX += Input.GetAxisRaw("Mouse X");
+            targetX += Input.GetAxisRaw("Mouse X") * orbitSensitivity;
             if (horizontalClamping != 360f)
             {
                 targetX = Mathf.Clamp(targetX, -horizontalClamping, horizontalClamping);
             }
 
-            targetY += Input.GetAxisRaw("Mouse Y");
+            targetY += Input.GetAxisRaw("Mouse Y") * orbitSensitivity;
             targetY = Mathf.Clamp(targetY, -verticalClamping, verticalClamping);
         }
 
@@ -70,7 +71,7 @@ public class FullOrbitCamera : MonoBehaviour
 
         if (allowZoom)
         {
-            dist = Mathf.Clamp(dist + -Input.mouseScrollDelta.y * 0.5f, minZoomDist, maxZoomDist);
+            dist = Mathf.Clamp(dist + -Input.mouseScrollDelta.y * zoomSensitivity * 0.5f, minZoomDist, maxZoomDist);
         }
         z = Maths.Damp(z, dist, smoothing * smoothing, true);
 
