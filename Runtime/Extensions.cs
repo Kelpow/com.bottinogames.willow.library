@@ -41,6 +41,22 @@ namespace Willow.Library
 
         #endregion
 
+        #region Quaternions
+        static readonly Quaternion FORUP_SWAPROT = new Quaternion(0f,0.7f,0.7f,0f);
+        public static void SwapForwardAndUp(this Quaternion rotation)
+        {
+            rotation = rotation * FORUP_SWAPROT;
+        }
+
+        #endregion
+
+        #region Transform
+        public static void InverseLockLookAt(this Transform transform, Vector3 forward, Vector3 up)
+        {
+            transform.rotation = Quaternion.LookRotation(up, forward) * FORUP_SWAPROT;
+        }
+        #endregion
+
         #region Floats
         /// <summary>
         /// Returns the float clamped between 0 and 1.
