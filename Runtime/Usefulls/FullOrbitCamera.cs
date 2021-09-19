@@ -45,6 +45,8 @@ public class FullOrbitCamera : MonoBehaviour
     private float y;
     private float z;
 
+    private Vector3 pos;
+
     private void Start()
     {
         targetFallback = transform.position;
@@ -70,7 +72,6 @@ public class FullOrbitCamera : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(-y, x, 0f);
 
-        Vector3 targetPos = target ? target.position : targetFallback;
 
         if (allowZoom)
         {
@@ -78,8 +79,17 @@ public class FullOrbitCamera : MonoBehaviour
         }
         z = Maths.Damp(z, dist, orbitSmoothing * orbitSmoothing, true);
 
-        if(positionalSmoothing == 0f)
-            transform.position = targetPos + transform.forward * -z;
+        Vector3 p = targetFallback;
+        if (target)
+        {
+            if (positionalSmoothing == 0f)
+                pos = target.position;
+            else
+                pos = Maths.Damp(pos, target.position, positionalSmoothing * positionalSmoothing, true);
+            p = pos;
+        }
+
+        transform.position = p + transform.forward * -z;
         
     }
 }
