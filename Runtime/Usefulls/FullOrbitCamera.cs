@@ -20,12 +20,11 @@ public class FullOrbitCamera : MonoBehaviour
 
     [Space(5)]
     [Range(0.2f, 10f)]
-    public float smoothing = 2f;
+    public float orbitSmoothing = 2f;
     [Range(0f, 90f)]
     public float verticalClamping = 85f;
     [Range(0f, 360f)]
     public float horizontalClamping = 360f;
-
 
     [Space(5)]
     public float orbitSensitivity = 1f;
@@ -33,6 +32,10 @@ public class FullOrbitCamera : MonoBehaviour
 
     [Space(10)]
     public Transform target;
+
+    [Space(5)]
+    [Range(0f,10f)]
+    public float positionalSmoothing = 4f;
 
     private Vector3 targetFallback;
 
@@ -62,8 +65,8 @@ public class FullOrbitCamera : MonoBehaviour
             targetY = Mathf.Clamp(targetY, -verticalClamping, verticalClamping);
         }
 
-        x = Maths.Damp(x, targetX, smoothing * smoothing, true);
-        y = Maths.Damp(y, targetY, smoothing * smoothing, true);
+        x = Maths.Damp(x, targetX, orbitSmoothing * orbitSmoothing, true);
+        y = Maths.Damp(y, targetY, orbitSmoothing * orbitSmoothing, true);
 
         transform.rotation = Quaternion.Euler(-y, x, 0f);
 
@@ -73,9 +76,11 @@ public class FullOrbitCamera : MonoBehaviour
         {
             dist = Mathf.Clamp(dist + -Input.mouseScrollDelta.y * zoomSensitivity * 0.5f, minZoomDist, maxZoomDist);
         }
-        z = Maths.Damp(z, dist, smoothing * smoothing, true);
+        z = Maths.Damp(z, dist, orbitSmoothing * orbitSmoothing, true);
 
-        transform.position = targetPos + transform.forward * -z;
+        if(positionalSmoothing == 0f)
+            transform.position = targetPos + transform.forward * -z;
+        
     }
 }
 
