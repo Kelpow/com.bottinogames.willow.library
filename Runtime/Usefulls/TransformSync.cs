@@ -33,6 +33,8 @@ public class TransformSync : MonoBehaviour
 
     [HideInInspector]
     public bool executeInEditMode;
+    [HideInInspector]
+    public bool reverseSync;
 
     private Transform oldTarget;
     private Vector3 oldPosition;
@@ -47,16 +49,7 @@ public class TransformSync : MonoBehaviour
 #endif
 
         if (syncTime == SyncTime.Update)
-        {
-            if (oldTarget != target ||
-                (positionSync != SyncMode.None && (positionSync == SyncMode.Local ? target.localPosition : target.position) != oldPosition) ||
-                (rotationSync != SyncMode.None && (rotationSync == SyncMode.Local ? target.localRotation : target.rotation) != oldRotation) ||
-                (scaleSync == SyncMode.Local && transform.localScale != oldScale)
-                )
-            {
                 Sync();
-            }
-        }
     }
     private void LateUpdate()
     {
@@ -66,54 +59,147 @@ public class TransformSync : MonoBehaviour
 #endif
 
         if (syncTime == SyncTime.LateUpdate)
-        {
-            if (oldTarget != target ||
-                (positionSync != SyncMode.None && (positionSync == SyncMode.Local ? target.localPosition : target.position) != oldPosition) ||
-                (rotationSync != SyncMode.None && (rotationSync == SyncMode.Local ? target.localRotation : target.rotation) != oldRotation) ||
-                (scaleSync == SyncMode.Local && transform.localScale != oldScale)
-                )
-            {
                 Sync();
-            }
-        }
     }
 
     void Sync()
     {
-        oldTarget = target;
         if (!target)
             return;
 
-        switch (positionSync)
+        if (!reverseSync)
         {
-            case SyncMode.Local:
-                transform.localPosition = target.localPosition;
-                oldPosition = target.localPosition;
-                break;
-            case SyncMode.World:
-                transform.position = target.position;
-                oldPosition = target.position;
-                break;
-        }
+            switch (positionSync)
+            {
+                case SyncMode.Local:
+                    transform.localPosition = target.localPosition;
+                    break;
+                case SyncMode.World:
+                    transform.position = target.position;
+                    break;
+            }
 
-        switch (rotationSync)
-        {
-            case SyncMode.Local:
-                transform.localRotation = target.localRotation;
-                oldRotation = target.localRotation;
-                break;
-            case SyncMode.World:
-                transform.rotation = target.rotation;
-                oldRotation = target.rotation;
-                break;
-        }
+            switch (rotationSync)
+            {
+                case SyncMode.Local:
+                    transform.localRotation = target.localRotation;
+                    break;
+                case SyncMode.World:
+                    transform.rotation = target.rotation;
+                    break;
+            }
 
-        switch (scaleSync)
+            switch (scaleSync)
+            {
+                case SyncMode.Local:
+                    transform.localScale = target.localScale;
+                    break;
+            }
+        }
+        else
         {
-            case SyncMode.Local:
-                transform.localScale = target.localScale;
-                oldScale = target.localScale;
-                break;
+            bool syncTargetToThisPos = false;
+            bool syncThisToTargetPos = false;
+
+            if (positionSync != SyncMode.None)
+            {
+                Vector3 targetPosition = positionSync == SyncMode.World ? target.position : target.localPosition;
+                Vector3 thisPosition = positionSync == SyncMode.World ? transform.position : transform.localPosition;
+
+                if (targetPosition != oldPosition)
+                    syncThisToTargetPos = true;
+                else if (thisPosition != oldPosition)
+                    syncTargetToThisPos = true;
+
+                if (syncThisToTargetPos)
+                {
+                    switch (positionSync)
+                    {
+                        case SyncMode.Local:
+                            transform.localPosition = target.localPosition;
+                            break;
+                        case SyncMode.World:
+                            transform.position = target.position;
+                            break;
+                    }
+                }
+                else if (syncTargetToThisPos)
+                {
+                    switch (positionSync)
+                    {
+                        case SyncMode.Local:
+                            target.localPosition = transform.localPosition;
+                            break;
+                        case SyncMode.World:
+                            target.position = transform.position;
+                            break;
+                    }
+                }
+
+                oldPosition = targetPosition;
+            }
+            
+            if (rotationSync != SyncMode.None)
+            {
+                Quaternion targetRotation = rotationSync == SyncMode.World ? target.rotation : target.localRotation;
+                Quaternion thisRotation = rotationSync == SyncMode.World ? transform.rotation : transform.localRotation;
+
+                if (targetRotation != oldRotation)
+                    syncThisToTargetPos = true;
+                else if (thisRotation != oldRotation)
+                    syncTargetToThisPos = true;
+
+                if (syncThisToTargetPos)
+                {
+                    switch (rotationSync)
+                    {
+                        case SyncMode.Local:
+                            transform.localRotation = target.localRotation;
+                            break;
+                        case SyncMode.World:
+                            transform.rotation = target.rotation;
+                            break;
+                    }
+                }
+                else if (syncTargetToThisPos)
+                {
+                    switch (rotationSync)
+                    {
+                        case SyncMode.Local:
+                            target.localRotation = transform.localRotation;
+                            break;
+                        case SyncMode.World:
+                            target.rotation = transform.rotation;
+                            break;
+                    }
+                }
+
+                oldRotation = targetRotation;
+            }
+
+
+            if (scaleSync == SyncMode.Local)
+            {
+                Vector3 targetScale = target.localScale;
+                Vector3 thisScale = transform.localScale;
+
+                if (targetScale != oldScale)
+                    syncThisToTargetPos = true;
+                else if (thisScale != oldScale)
+                    syncTargetToThisPos = true;
+
+                if (syncThisToTargetPos)
+                {
+                    transform.localScale = target.localScale;
+                }
+                else if (syncTargetToThisPos)
+                {
+                    target.localScale = transform.localScale;
+                }
+
+                oldScale = targetScale;
+            }
+            
         }
     }
 }
@@ -138,54 +224,8 @@ public class TransformSyncEditor : Editor
 
             EditorGUI.indentLevel++;
 
-            target.executeInEditMode = EditorGUILayout.ToggleLeft("Execute in Edit mode", target.executeInEditMode);
-
-            if (GUILayout.Button("Setup Reverse Sync"))
-            {
-                if (target.target)
-                {
-                    bool toSync = true;
-                    TransformSync preexistingSync = null;
-                    TransformSync[] targetSyncs = target.target.GetComponents<TransformSync>();
-                    if(targetSyncs.Length > 0)
-                    {
-                        foreach (TransformSync sync in targetSyncs)
-                        {
-                            if (sync.target == target.transform)
-                            {
-                                if (!EditorUtility.DisplayDialog("Overwrite Transform Sync?", "A Transform Sync targeting this object already exists on the target. Do you wish to overwrite the settings of that Transform Sync?", "Overwrite", "Cancel"))
-                                    toSync = false;
-                                else
-                                    preexistingSync = sync;
-                                
-                                break;
-                            }
-                        }
-                    }
-
-                    if (toSync)
-                    {
-                        TransformSync targetSync;
-                        if (preexistingSync)
-                            targetSync = preexistingSync;
-                        else
-                            targetSync = ObjectFactory.AddComponent(target.target.gameObject, typeof(TransformSync)) as TransformSync;
-
-                        targetSync.target = target.transform;
-                        targetSync.syncTime = target.syncTime;
-                        targetSync.positionSync = target.positionSync;
-                        targetSync.rotationSync = target.rotationSync;
-                        targetSync.scaleSync = target.scaleSync;
-                        targetSync.executeInEditMode = target.executeInEditMode;
-
-                        if (target.executeInEditMode)
-                            target.SendMessage("Sync");
-                    }
-
-                } 
-                else
-                    Debug.LogWarning("A target must be provided to set up Reverse Sync");
-            }
+            target.executeInEditMode = EditorGUILayout.Toggle("Execute in Edit mode", target.executeInEditMode);
+            target.reverseSync = EditorGUILayout.Toggle("Reverse Sync", target.reverseSync);
 
             EditorGUI.indentLevel--;
         }
