@@ -23,10 +23,8 @@ public class SelectionReassignment : MonoBehaviour
     private bool targetSelectedLast = false;
     private bool retarget;
 
-    [ContextMenu("Test")]
     void SelectionChanged()
     {
-        Debug.Log("test");
 
         if (!target)
             return;
