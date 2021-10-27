@@ -17,16 +17,41 @@ public class BoxButton : MonoBehaviour
     public Bounds bounds = new Bounds(Vector3.zero, Vector3.one);
 
     [Space(10f)]
-    [Header("Event")]
+    [Header("Events")]
     public UnityEvent onClickDown = new UnityEvent();
+    public UnityEvent onGainHover = new UnityEvent();
+    public UnityEvent onLoseHover = new UnityEvent();
+
+    private bool hasHover;
 
     private void Update()
     {
-        if(onClickDown != null && camera != null && Input.GetMouseButtonDown(0))
+        if (camera == null)
+            return;
+
+        if (camera.MouseOverlapsBounds(bounds, transform))
         {
-            if (camera.MouseOverlapsBounds(bounds))
-                onClickDown.Invoke();
+            if(!hasHover)
+            {
+                hasHover = true;
+                if (onGainHover != null)
+                    onGainHover.Invoke();
+            } else
+            {
+                if (Input.GetMouseButtonDown(0) && onClickDown != null)
+                    onClickDown.Invoke();
+            }
         }
+        else 
+        {
+            if (hasHover)
+            {
+                hasHover = false;
+                if(onLoseHover != null)
+                    onLoseHover.Invoke();
+            }
+        }
+        Debug.Log(camera.MouseOverlapsBounds(bounds, transform));
     }
 }
 
