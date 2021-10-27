@@ -51,7 +51,6 @@ public class BoxButton : MonoBehaviour
                     onLoseHover.Invoke();
             }
         }
-        Debug.Log(camera.MouseOverlapsBounds(bounds, transform));
     }
 }
 
