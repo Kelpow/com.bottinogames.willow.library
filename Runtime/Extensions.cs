@@ -119,7 +119,15 @@ namespace Willow.Library
         }
         public static bool MouseOverlapsBounds(this Camera camera, Bounds bounds, out Vector3 localIntersectionPoint, Transform parent = null)
         {
-            Ray mouseray = camera.ScreenPointToRay(Input.mousePosition);    
+            return ScreenPositionOverlapsBounds(camera, bounds, out localIntersectionPoint, Input.mousePosition, parent);
+        }
+        public static bool ScreenPositionOverlapsBounds(this Camera camera, Bounds bounds, Vector3 screenPosition, Transform parent = null)
+        {
+            return ScreenPositionOverlapsBounds(camera, bounds, out Vector3 throwAwayVector, screenPosition, parent);
+        }
+        public static bool ScreenPositionOverlapsBounds(this Camera camera, Bounds bounds, out Vector3 localIntersectionPoint, Vector3 screenPosition, Transform parent = null)
+        {
+            Ray mouseray = camera.ScreenPointToRay(screenPosition);    
 
             Ray transformedRay = new Ray(
                 parent.InverseTransformPoint(mouseray.origin),

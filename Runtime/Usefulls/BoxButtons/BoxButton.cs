@@ -52,6 +52,40 @@ public class BoxButton : MonoBehaviour
             }
         }
     }
+
+
+
+    [RequireComponent(typeof(BoxButton))]
+    public class Extension : MonoBehaviour
+    {
+        protected BoxButton bb;
+
+        private void Awake()
+        {
+            bb = GetComponent<BoxButton>();
+        }
+
+        private void OnEnable()
+        {
+            bb.onClickDown.AddListener(OnClickDown);
+            bb.onGainHover.AddListener(OnGainHover);
+            bb.onLoseHover.AddListener(OnLoseHover);
+        }
+
+        private void OnDisable()
+        {
+            bb.onClickDown.RemoveListener(OnClickDown);
+            bb.onGainHover.RemoveListener(OnGainHover);
+            bb.onLoseHover.RemoveListener(OnLoseHover);
+        }
+
+        protected virtual void OnClickDown() { }
+
+        protected virtual void OnGainHover() { }
+        
+        protected virtual void OnLoseHover() { }
+
+    }
 }
 
 
