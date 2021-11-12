@@ -30,32 +30,32 @@ namespace Willow.IDLUI
 
         private bool repeating;
         private float lastInputTime;
-        private Input.Direction lastDirection;
+        private Direction lastDirection;
 
-        public Input.Direction Digital_GetDirInput()
+        public Direction Digital_GetDirInput()
         {
-            Input.Direction unfilteredDirection = Input.Direction.None;
+            Direction unfilteredDirection = Direction.None;
 
             float horiz = analogueToDigitalIn.x;
             float verti = analogueToDigitalIn.y;
 
             if (verti > INPT_ANLG_DEADZN)
-                unfilteredDirection = Input.Direction.Up;
+                unfilteredDirection = Direction.Up;
             else if (verti < -INPT_ANLG_DEADZN)
-                unfilteredDirection = Input.Direction.Down;
+                unfilteredDirection = Direction.Down;
             else if (horiz > INPT_ANLG_DEADZN)
-                unfilteredDirection = Input.Direction.Right;
+                unfilteredDirection = Direction.Right;
             else if (horiz < -INPT_ANLG_DEADZN)
-                unfilteredDirection = Input.Direction.Left;
+                unfilteredDirection = Direction.Left;
 
 
 
-            if(unfilteredDirection == Input.Direction.None)
+            if(unfilteredDirection == Direction.None)
             {
                 repeating = false;
-                lastDirection = Input.Direction.None;
+                lastDirection = Direction.None;
                 lastInputTime = 0f;
-                return Input.Direction.None;
+                return Direction.None;
             }
 
             if(lastDirection != unfilteredDirection)
@@ -75,7 +75,7 @@ namespace Willow.IDLUI
                 }
                 else
                 {
-                    return Input.Direction.None;
+                    return Direction.None;
                 }
             }
         }

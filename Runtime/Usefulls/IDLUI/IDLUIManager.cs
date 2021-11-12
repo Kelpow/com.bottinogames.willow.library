@@ -170,14 +170,14 @@ namespace Willow.IDLUI
 
                 Input input = Manager.camera.input; 
 
-                Input.Direction digitalInputDir = input.Digital_GetDirInput();
+                Direction digitalInputDir = input.Digital_GetDirInput();
 
                 if (!focus)
                     focus = RecoverLostFocus();
                 if (focus.category != activeCategory)
                     focus = RecoverLostFocus();
 
-                if (digitalInputDir != Input.Direction.None || input.Digital_select)
+                if (digitalInputDir != Direction.None || input.Digital_select)
                 {
                     if (usingAnalogue)
                     {
@@ -211,25 +211,25 @@ namespace Willow.IDLUI
                     {
                         switch (digitalInputDir)
                         {
-                            case Input.Direction.Up:
+                            case Direction.Up:
                                 if (focus.up)
                                 {
                                     FocusButton(focus.up);
                                 }
                                 break;
-                            case Input.Direction.Down:
+                            case Direction.Down:
                                 if (focus.down)
                                 {
                                     FocusButton(focus.down);
                                 }
                                 break;
-                            case Input.Direction.Left:
+                            case Direction.Left:
                                 if (focus.left)
                                 {
                                     FocusButton(focus.left);
                                 }
                                 break;
-                            case Input.Direction.Right:
+                            case Direction.Right:
                                 if (focus.right)
                                 {
                                     FocusButton(focus.right);
