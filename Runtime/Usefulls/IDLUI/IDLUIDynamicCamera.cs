@@ -348,10 +348,7 @@ namespace Willow.IDLUI
             for (int i = 0; i < newPositions.Length; i++)
             {
                 int offset = i > toCopy ? 1 : 0;
-                if (i == toCopy - 1)
-                    newPositions[i - offset] = cam.positions[i - offset].Copy();
-                else
-                    newPositions[i] = cam.positions[i - offset];
+                newPositions[i] = cam.positions[i - offset].Copy();
             }
 
             cam.positions = newPositions;
