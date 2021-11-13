@@ -63,21 +63,23 @@ namespace Willow.IDLUI
             private void OnEnable() 
             {
                 button = GetComponent<IDLUIButton>();
-                button.onSelect.AddListener(onSelect);
-                button.onGainFocus.AddListener(onGainFocus);
-                button.onLoseFocus.AddListener(onLoseFocus);
+                button.onSelect.AddListener(OnSelect);
+                button.onGainFocus.AddListener(OnGainFocus);
+                button.onLoseFocus.AddListener(OnLoseFocus);
             }
             private void OnDisable() 
             {
-                button.onSelect.RemoveListener(onSelect);
-                button.onGainFocus.RemoveListener(onGainFocus);
-                button.onLoseFocus.RemoveListener(onLoseFocus);
+                button.onSelect.RemoveListener(OnSelect);
+                button.onGainFocus.RemoveListener(OnGainFocus);
+                button.onLoseFocus.RemoveListener(OnLoseFocus);
             }
 
-            public virtual void onSelect() { }
-            public virtual void onGainFocus() { }
-            public virtual void onLoseFocus() { }
+            protected virtual void OnSelect() { }
+            protected virtual void OnGainFocus() { }
+            protected virtual void OnLoseFocus() { }
         }
+
+
     }
 
 #if UNITY_EDITOR
