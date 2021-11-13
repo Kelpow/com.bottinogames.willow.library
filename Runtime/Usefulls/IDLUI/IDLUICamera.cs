@@ -6,7 +6,7 @@ namespace Willow.IDLUI
 {
     public class IDLUICamera : MonoBehaviour
     {
-        public Camera camera { get; private set; }
+        new public Camera camera { get; private set; }
 
         public Input input;
 

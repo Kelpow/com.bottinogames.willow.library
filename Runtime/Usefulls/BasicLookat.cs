@@ -9,7 +9,7 @@ public class BasicLookat : MonoBehaviour
     public Transform upTarget;
 
 #if UNITY_EDITOR
-    public bool runInEditMode = false;
+    new public bool runInEditMode = false;
 #endif
 
     void LateUpdate()
