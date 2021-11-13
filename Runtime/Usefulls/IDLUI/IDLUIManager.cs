@@ -172,9 +172,7 @@ namespace Willow.IDLUI
 
                 Direction digitalInputDir = input.Digital_GetDirInput();
 
-                if (!focus)
-                    focus = RecoverLostFocus();
-                if (focus.category != activeCategory)
+                if (!focus || focus.category != activeCategory)
                     focus = RecoverLostFocus();
 
                 if (digitalInputDir != Direction.None || input.Digital_select)
