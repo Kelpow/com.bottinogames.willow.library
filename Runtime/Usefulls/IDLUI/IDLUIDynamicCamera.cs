@@ -145,6 +145,20 @@ namespace Willow.IDLUI
             public bool clearFocusOnTransition = true;
             public bool freezeInputDuringTransition = true;
             public Manager.Category category;
+
+            public Position Copy()
+            {
+                Position newPosition = new Position();
+                newPosition.name = name;
+                newPosition.position =position;
+                newPosition.rotation =rotation;
+                newPosition.buttonToFocus =buttonToFocus;
+                newPosition.clearFocusOnTransition =clearFocusOnTransition;
+                newPosition.freezeInputDuringTransition =freezeInputDuringTransition;
+                newPosition.category = category;
+
+                return newPosition;
+            }
         }
     }
 
@@ -329,7 +343,10 @@ namespace Willow.IDLUI
             for (int i = 0; i < newPositions.Length; i++)
             {
                 int offset = i > toCopy ? 1 : 0;
-                newPositions[i] = cam.positions[i - offset];
+                if (i == toCopy - 1)
+                    newPositions[i - offset] = cam.positions[i - offset].Copy();
+                else
+                    newPositions[i] = cam.positions[i - offset];
             }
 
             cam.positions = newPositions;
