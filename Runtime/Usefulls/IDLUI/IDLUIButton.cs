@@ -79,6 +79,15 @@ namespace Willow.IDLUI
             protected virtual void OnLoseFocus() { }
         }
 
+#if UNITY_EDITOR
+        private void SetSizeToBounds()
+        {
+            if(TryGetComponent<Renderer>(out Renderer renderer))
+            {
+                bounds = renderer.bounds;
+            }
+        }
+#endif
 
     }
 
