@@ -299,6 +299,11 @@ namespace Willow.IDLUI
                                 cam.transform.position = cam.positions[focusedIndex].position;
                                 cam.transform.rotation = cam.positions[focusedIndex].rotation;
                             }
+                            UnityEngine.GUI.enabled = UnityEngine.GUI.enabled && Application.isPlaying;
+                            if (GUILayout.Button("Transition"))
+                            {
+                                cam.TransitionToPosition(cam.positions[i].name);
+                            }
                             UnityEngine.GUI.enabled = true;
                         }
                     }
