@@ -65,7 +65,9 @@ namespace Willow.Library.Editor
 
 
 
-        // Saving this code for posterities sake, for we must learn from the fools so we may evade their shared fate
+        // Saving this code for posterities sake,
+        // for we must learn from the fools,
+        // lest we share their fate
 
         ////ripped some code from https://localcoders.blogspot.com/2016/06/getting-dns-txt-record-using-c.html
         //private static string[] /*IList<string>*/ GetPackageURLsListedInTXTRecord(string hostname)
