@@ -80,6 +80,7 @@ namespace Willow.IDLUI
         }
 
 #if UNITY_EDITOR
+        [ContextMenu("Set Bounds to Renderer Bounds")]
         private void SetSizeToBounds()
         {
             if(TryGetComponent<Renderer>(out Renderer renderer))
