@@ -83,9 +83,9 @@ namespace Willow.IDLUI
         [ContextMenu("Set Bounds to Renderer Bounds")]
         private void SetSizeToBounds()
         {
-            if(TryGetComponent<Renderer>(out Renderer renderer))
+            if(TryGetComponent<MeshFilter>(out MeshFilter filter))
             {
-                bounds = renderer.bounds;
+                bounds = filter.sharedMesh.bounds;
             }
         }
 #endif
