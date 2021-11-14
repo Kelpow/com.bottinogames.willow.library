@@ -274,15 +274,6 @@ namespace Willow.IDLUI
                 }
             }
 
-            private void OnGUI()
-            {
-                if (focus)
-                    GUILayout.Label("Focus: " + focus.name);
-                else
-                    GUILayout.Label("Focus: ");
-                GUILayout.Label("Focused: " + isFocused);
-                GUILayout.Label("Analogue: " + usingAnalogue);
-            }
         }
 
         private static IDLUIButton RecoverLostFocus()
