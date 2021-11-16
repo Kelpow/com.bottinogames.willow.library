@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using Willow.Library;
 
+[DefaultExecutionOrder(-250)]
 public class AudioManager : MonoBehaviour
 {
     const string VOLUME_SAVE_STRING = "WillowAudioManager_";

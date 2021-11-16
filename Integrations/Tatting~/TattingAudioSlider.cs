@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using Tatting;
 
+
 public class TattingAudioSlider : TattingSlider.Behaviour
 {
-    AudioManager.AudioChannel channel;
+    public AudioManager.AudioChannel channel;
 
     private void Start()
     {
-        slider.value = Mathf.RoundToInt(AudioManager.GetVolume(channel) * (slider.displayStrings.Length - 1));
+        Debug.Log(AudioManager.GetVolume(channel));
+        slider.SetValue(Mathf.RoundToInt(AudioManager.GetVolume(channel) * (slider.displayStrings.Length - 1)));
     }
 
     public override void OnValueChange(int max, int value)
     {
-        AudioManager.SetVolume(channel, (float)max / (float)value);
+        AudioManager.SetVolume(channel, (float)value / (float)max);
     }
 }
