@@ -12,8 +12,8 @@ public class Sous : MonoBehaviour {
     }
 
     public Mode mode = Mode.Fill;
-    public int width = 320;
-    public int height = 240;
+    [SerializeField] private int width = 320;
+    [SerializeField] private int height = 240;
 
 
     RenderTexture lowResTexture;
@@ -36,6 +36,9 @@ public class Sous : MonoBehaviour {
     
     public void SetResolution(int x, int y)
     {
+        width = x;
+        height = y;
+
         lowResTexture = new RenderTexture(x, y, 24, RenderTextureFormat.Default);
         lowResTexture.antiAliasing = 1;
         lowResTexture.filterMode = FilterMode.Point;
