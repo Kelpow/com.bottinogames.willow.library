@@ -20,12 +20,10 @@ public class Sous : MonoBehaviour {
     Texture2D filler;
     GUIStyle fillerStyle;
 
-	void Start () {
-        lowResTexture = new RenderTexture(width, height, 24, RenderTextureFormat.Default);
-        lowResTexture.antiAliasing = 1;
-        lowResTexture.filterMode = FilterMode.Point;
+	void Start () 
+    {
+        SetResolution(width, height);    
 
-        GetComponent<Camera>().targetTexture = lowResTexture;
         GetComponent<Camera>().allowMSAA = false;
 
         filler = new Texture2D(1, 1);
@@ -36,6 +34,15 @@ public class Sous : MonoBehaviour {
         fillerStyle.normal.background = filler;
     }
     
+    void SetResolution(int x, int y)
+    {
+        lowResTexture = new RenderTexture(width, height, 24, RenderTextureFormat.Default);
+        lowResTexture.antiAliasing = 1;
+        lowResTexture.filterMode = FilterMode.Point;
+
+        GetComponent<Camera>().targetTexture = lowResTexture;
+    }
+
     void OnGUI() {
         if (lowResTexture)
         {
@@ -91,4 +98,6 @@ public class Sous : MonoBehaviour {
             }
         }
     }
+
+    
 }
