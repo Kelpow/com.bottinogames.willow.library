@@ -54,7 +54,7 @@ public class AudioManager : MonoBehaviour
             {
                 if (instance.mixer.GetFloat(channel, out float v))
                 {
-                    PlayerPrefs.SetFloat(VOLUME_SAVE_STRING + channel, 1f);
+                    PlayerPrefs.SetFloat(VOLUME_SAVE_STRING + channel, volume);
                     instance.mixer.SetLinearVolume(channel, volume);
                 }
                 else
