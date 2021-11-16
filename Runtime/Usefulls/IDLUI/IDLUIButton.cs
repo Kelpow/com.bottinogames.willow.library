@@ -1,10 +1,11 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
+using UnityEditor.EditorTools;
 #endif
 
 
@@ -176,5 +177,245 @@ namespace Willow.IDLUI
     }
 
 
+
+
+
+
+    //Setup Tool
+
+
+    [EditorTool("IDLUI Button Layout")]
+    class IDLUIButtonConnector : EditorTool
+    {
+
+        
+        const int UP = 0;
+        const int DOWN = 1;
+        const int LEFT = 2;
+        const int RIGHT = 3;
+
+        IDLUIButton focusedButton;
+        int focusedDirection;
+
+        private void OnEnable()
+        {
+            focusedButton = null;
+        }
+
+        public override void OnToolGUI(EditorWindow window)
+        {
+            IDLUIButton[] buttons = GameObject.FindObjectsOfType<IDLUIButton>();
+
+            Camera sceneCam = Camera.current;
+            if (sceneCam) 
+            {
+                foreach (IDLUIButton button in buttons)
+                {
+                    if (button.up)
+                    {
+                        if(button.up.down == button)
+                        {
+                            Handles.color = Color.green;
+                            Handles.DrawLine(button.transform.position, button.up.transform.position);
+                        }
+                        else
+                        {
+                            Handles.color = Color.green;
+                            Handles.DrawDottedLine(button.transform.position, button.up.transform.position, 5f);
+                        }
+                    }
+
+                    if (button.down)
+                    {
+                        if (button.down.up == button)
+                        {
+                            Handles.color = Color.green;
+                            Handles.DrawLine(button.transform.position, button.down.transform.position);
+                        }
+                        else
+                        {
+                            Handles.color = Color.green;
+                            Handles.DrawDottedLine(button.transform.position, button.down.transform.position, 5f);
+                        }
+                    }
+
+                    if (button.left)
+                    {
+                        if (button.left.right == button)
+                        {
+                            Handles.color = Color.red;
+                            Handles.DrawLine(button.transform.position, button.left.transform.position);
+                        }
+                        else
+                        {
+                            Handles.color = Color.red;
+                            Handles.DrawDottedLine(button.transform.position, button.left.transform.position, 5f);
+                        }
+                    }
+
+                    if (button.right)
+                    {
+                        if (button.right.left == button)
+                        {
+                            Handles.color = Color.red;
+                            Handles.DrawLine(button.transform.position, button.right.transform.position);
+                        }
+                        else
+                        {
+                            Handles.color = Color.red;
+                            Handles.DrawDottedLine(button.transform.position, button.right.transform.position, 5f);
+                        }
+                    }
+                }
+            }
+            Handles.BeginGUI();
+
+            if(focusedButton != null)
+            {
+                if (UnityEngine.GUI.Button(new Rect(5, 5, 80, 20), "Cancel"))
+                {
+                    focusedButton = null;
+                }
+            }
+
+            int id = 24910;
+            if (sceneCam)
+            {
+                foreach (IDLUIButton button in buttons)
+                {
+                    if (button.up)
+                    {
+
+                    }
+
+                    Vector3 screenPos = sceneCam.WorldToScreenPoint(button.transform.position);
+                    GUILayout.BeginArea(new Rect(screenPos.x-30, (Screen.height - screenPos.y) - 40, 60, 80));
+                    SceneViewGuiArea(button);
+                    GUILayout.EndArea();
+                    id++;
+                }
+            }
+
+            Handles.EndGUI();
+        }
+
+        public void SceneViewGuiArea(IDLUIButton button)
+        {
+            if (focusedButton == null)
+            {
+                GUILayout.BeginVertical("HelpBox");
+                {
+                    GUILayout.BeginHorizontal();
+                    {
+                        GUILayout.FlexibleSpace();
+                        if (GUILayout.Button("↑", GUILayout.Width(25)))
+                        {
+                            focusedButton = button;
+                            focusedDirection = UP;
+                        }
+                        GUILayout.FlexibleSpace();
+                    }
+                    GUILayout.EndHorizontal();
+                    GUILayout.BeginHorizontal();
+                    {
+                        GUILayout.FlexibleSpace();
+                        if (GUILayout.Button("←", GUILayout.Width(25)))
+                        {
+                            focusedButton = button;
+                            focusedDirection = LEFT;
+                        }
+                        if (GUILayout.Button("→", GUILayout.Width(25)))
+                        {
+                            focusedButton = button;
+                            focusedDirection = RIGHT;
+                        }
+                        GUILayout.FlexibleSpace();
+                    }
+                    GUILayout.EndHorizontal();
+                    GUILayout.BeginHorizontal();
+                    {
+                        GUILayout.FlexibleSpace();
+                        if (GUILayout.Button("↓", GUILayout.Width(25)))
+                        {
+                            focusedButton = button;
+                            focusedDirection = DOWN;
+                        }
+                        GUILayout.FlexibleSpace();
+                    }
+                    GUILayout.EndHorizontal();
+                }
+                GUILayout.EndVertical();
+            }
+            else
+            {
+                GUILayout.BeginHorizontal("HelpBox");
+                {
+                    string recip = focusedDirection == UP || focusedDirection == DOWN ? "⇅" : "⇄";
+                    string direct = focusedDirection == UP ? "↑" :
+                        (focusedDirection == RIGHT ? "→" :
+                        (focusedDirection == LEFT ? "←" :
+                        "↓"));
+
+
+                    int oldsize = UnityEngine.GUI.skin.button.fontSize;
+                    UnityEngine.GUI.skin.button.fontSize = 16;
+                    if (GUILayout.Button(recip, GUILayout.Width(25), GUILayout.Height(25)))
+                    {
+                        switch (focusedDirection)
+                        {
+                            case UP:
+                                focusedButton.up = button;
+                                button.down = focusedButton;
+                                focusedButton = null;
+                                break;
+                            case DOWN:
+                                focusedButton.down = button;
+                                button.up = focusedButton;
+                                focusedButton = null;
+                                break;
+                            case LEFT:
+                                focusedButton.left = button;
+                                button.right = focusedButton;
+                                focusedButton = null;
+                                break;
+                            case RIGHT:
+                                focusedButton.right = button;
+                                button.left = focusedButton;
+                                focusedButton = null;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    if (GUILayout.Button(direct, GUILayout.Width(25), GUILayout.Height(25)))
+                    {
+                        switch (focusedDirection)
+                        {
+                            case UP:
+                                focusedButton.up = button;
+                                focusedButton = null;
+                                break;
+                            case DOWN:
+                                focusedButton.down = button;
+                                focusedButton = null;
+                                break;
+                            case LEFT:
+                                focusedButton.left = button;
+                                focusedButton = null;
+                                break;
+                            case RIGHT:
+                                focusedButton.right = button;
+                                focusedButton = null;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    UnityEngine.GUI.skin.button.fontSize = oldsize;
+                }
+                GUILayout.EndHorizontal();
+            }
+        }
+    }
 #endif
 }
