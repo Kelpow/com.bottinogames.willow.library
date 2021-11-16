@@ -36,7 +36,7 @@ public class Sous : MonoBehaviour {
     
     public void SetResolution(int x, int y)
     {
-        lowResTexture = new RenderTexture(width, height, 24, RenderTextureFormat.Default);
+        lowResTexture = new RenderTexture(x, y, 24, RenderTextureFormat.Default);
         lowResTexture.antiAliasing = 1;
         lowResTexture.filterMode = FilterMode.Point;
 
