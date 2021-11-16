@@ -34,7 +34,7 @@ public class Sous : MonoBehaviour {
         fillerStyle.normal.background = filler;
     }
     
-    void SetResolution(int x, int y)
+    public void SetResolution(int x, int y)
     {
         lowResTexture = new RenderTexture(width, height, 24, RenderTextureFormat.Default);
         lowResTexture.antiAliasing = 1;
