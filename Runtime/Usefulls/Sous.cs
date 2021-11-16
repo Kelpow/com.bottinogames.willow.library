@@ -12,8 +12,8 @@ public class Sous : MonoBehaviour {
     }
 
     public Mode mode = Mode.Fill;
-    [SerializeField] private int width = 320;
-    [SerializeField] private int height = 240;
+    public int width = 320;
+    public int height = 240;
 
 
     RenderTexture lowResTexture;
