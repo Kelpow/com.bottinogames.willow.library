@@ -285,11 +285,6 @@ namespace Willow.IDLUI
             {
                 foreach (IDLUIButton button in buttons)
                 {
-                    if (button.up)
-                    {
-
-                    }
-
                     Vector3 screenPos = sceneCam.WorldToScreenPoint(button.transform.position);
                     Rect boxRect = new Rect(screenPos.x - 30, (Screen.height - screenPos.y) - 40, 60, 80);
                     GUILayout.BeginArea(boxRect);
@@ -356,6 +351,8 @@ namespace Willow.IDLUI
             }
             else
             {
+
+                UnityEngine.GUI.enabled = focusedButton != button;
                 GUILayout.BeginHorizontal("HelpBox");
                 {
                     string recip = focusedDirection == UP || focusedDirection == DOWN ? "⇅" : "⇄";
@@ -422,6 +419,7 @@ namespace Willow.IDLUI
                     UnityEngine.GUI.skin.button.fontSize = oldsize;
                 }
                 GUILayout.EndHorizontal();
+                UnityEngine.GUI.enabled = true;
             }
         }
     }
