@@ -294,8 +294,11 @@ namespace Willow.IDLUI
                     Rect boxRect = new Rect(screenPos.x - 30, (Screen.height - screenPos.y) - 40, 60, 80);
                     GUILayout.BeginArea(boxRect);
                     SceneViewGuiArea(button);
-                    if (UnityEngine.GUI.Button(new Rect(2f, 2f, 10f, 10f), GUIContent.none))
-                        Selection.SetActiveObjectWithContext(button.gameObject, null);
+                    if (focusedButton == null)
+                    {
+                        if (UnityEngine.GUI.Button(new Rect(2f, 2f, 10f, 10f), GUIContent.none))
+                            Selection.SetActiveObjectWithContext(button.gameObject, null);
+                    }
                     GUILayout.EndArea();
                     id++;
                 }
