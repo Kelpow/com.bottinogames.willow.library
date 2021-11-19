@@ -304,6 +304,8 @@ namespace Willow.IDLUI
 
         public void SceneViewGuiArea(IDLUIButton button)
         {
+            bool rem = Event.current.shift;
+
             if (focusedButton == null)
             {
                 GUILayout.BeginVertical("HelpBox");
@@ -311,10 +313,17 @@ namespace Willow.IDLUI
                     GUILayout.BeginHorizontal();
                     {
                         GUILayout.FlexibleSpace();
-                        if (GUILayout.Button("↑", GUILayout.Width(25)))
+                        if (GUILayout.Button(rem ? "✖" : "↑", GUILayout.Width(25)))
                         {
-                            focusedButton = button;
-                            focusedDirection = UP;
+                            if (rem)
+                            {
+                                button.up = null;
+                            }
+                            else
+                            {
+                                focusedButton = button;
+                                focusedDirection = UP;
+                            }
                         }
                         GUILayout.FlexibleSpace();
                     }
@@ -322,15 +331,29 @@ namespace Willow.IDLUI
                     GUILayout.BeginHorizontal();
                     {
                         GUILayout.FlexibleSpace();
-                        if (GUILayout.Button("←", GUILayout.Width(25)))
+                        if (GUILayout.Button(rem ? "✖" : "←", GUILayout.Width(25)))
                         {
-                            focusedButton = button;
-                            focusedDirection = LEFT;
+                            if (rem)
+                            {
+                                button.left = null;
+                            }
+                            else
+                            {
+                                focusedButton = button;
+                                focusedDirection = LEFT;
+                            }
                         }
-                        if (GUILayout.Button("→", GUILayout.Width(25)))
+                        if (GUILayout.Button(rem ? "✖" : "→", GUILayout.Width(25)))
                         {
-                            focusedButton = button;
+                            if (rem)
+                            {
+                                button.right = null;
+                            }
+                            else
+                            {
+                                focusedButton = button;
                             focusedDirection = RIGHT;
+                            }
                         }
                         GUILayout.FlexibleSpace();
                     }
@@ -338,10 +361,17 @@ namespace Willow.IDLUI
                     GUILayout.BeginHorizontal();
                     {
                         GUILayout.FlexibleSpace();
-                        if (GUILayout.Button("↓", GUILayout.Width(25)))
+                        if (GUILayout.Button(rem ? "✖" : "↓", GUILayout.Width(25)))
                         {
-                            focusedButton = button;
-                            focusedDirection = DOWN;
+                            if (rem)
+                            {
+                                button.down = null;
+                            }
+                            else
+                            {
+                                focusedButton = button;
+                                focusedDirection = DOWN;
+                            }
                         }
                         GUILayout.FlexibleSpace();
                     }
