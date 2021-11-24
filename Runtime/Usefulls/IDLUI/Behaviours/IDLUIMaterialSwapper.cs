@@ -9,23 +9,41 @@ public class IDLUIMaterialSwapper : IDLUIButton.Extension
     [SerializeField] Material highlightMaterial;
 
     Renderer rend;
+    [SerializeField] Renderer[] additionalRenderers;
+    [SerializeField] Material[] additionalStartMaterials;
 
     private void Start()
     {
         rend = GetComponent<Renderer>();
         startMaterial = rend.sharedMaterial;
+        additionalStartMaterials = new Material[additionalRenderers.Length];
+        for (int i = 0; i < additionalRenderers.Length; i++)
+        {
+            additionalStartMaterials[i] = additionalRenderers[i].sharedMaterial;
+        }
     }
 
     protected override void OnGainFocus()
     {
         if (highlightMaterial && rend)
+        {
             rend.sharedMaterial = highlightMaterial;
-
+            for (int i = 0; i < additionalRenderers.Length; i++)
+            {
+                additionalRenderers[i].sharedMaterial = highlightMaterial;
+            }
+        }
     }
 
     protected override void OnLoseFocus()
     {
         if (startMaterial && rend)
+        {
             rend.sharedMaterial = startMaterial;
+            for (int i = 0; i < additionalRenderers.Length; i++)
+            {
+                additionalRenderers[i].sharedMaterial = additionalStartMaterials[i];
+            }
+        }
     }
 }
