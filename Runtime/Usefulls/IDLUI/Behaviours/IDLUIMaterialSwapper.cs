@@ -10,7 +10,7 @@ public class IDLUIMaterialSwapper : IDLUIButton.Extension
 
     Renderer rend;
     [SerializeField] Renderer[] additionalRenderers;
-    [SerializeField] Material[] additionalStartMaterials;
+    [HideInInspector] [SerializeField] Material[] additionalStartMaterials;
 
     private void Start()
     {
