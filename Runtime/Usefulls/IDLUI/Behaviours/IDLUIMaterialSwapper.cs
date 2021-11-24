@@ -40,15 +40,13 @@ public class IDLUIMaterialSwapper : IDLUIButton.Extension
 
     protected override void OnLoseFocus()
     {
-        if (startMaterial)
-        {
-            if(rend)
-                rend.sharedMaterial = startMaterial;
+        
+        if(rend && startMaterial)
+            rend.sharedMaterial = startMaterial;
 
-            for (int i = 0; i < additionalRenderers.Length; i++)
-            {
-                additionalRenderers[i].sharedMaterial = additionalStartMaterials[i];
-            }
+        for (int i = 0; i < additionalRenderers.Length; i++)
+        {
+            additionalRenderers[i].sharedMaterial = additionalStartMaterials[i];
         }
     }
 }
