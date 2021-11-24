@@ -15,7 +15,8 @@ public class IDLUIMaterialSwapper : IDLUIButton.Extension
     private void Start()
     {
         rend = GetComponent<Renderer>();
-        startMaterial = rend.sharedMaterial;
+        if(rend)
+            startMaterial = rend.sharedMaterial;
         additionalStartMaterials = new Material[additionalRenderers.Length];
         for (int i = 0; i < additionalRenderers.Length; i++)
         {
@@ -25,9 +26,11 @@ public class IDLUIMaterialSwapper : IDLUIButton.Extension
 
     protected override void OnGainFocus()
     {
-        if (highlightMaterial && rend)
+        if (highlightMaterial)
         {
-            rend.sharedMaterial = highlightMaterial;
+            if(rend)
+                rend.sharedMaterial = highlightMaterial;
+
             for (int i = 0; i < additionalRenderers.Length; i++)
             {
                 additionalRenderers[i].sharedMaterial = highlightMaterial;
@@ -37,9 +40,11 @@ public class IDLUIMaterialSwapper : IDLUIButton.Extension
 
     protected override void OnLoseFocus()
     {
-        if (startMaterial && rend)
+        if (startMaterial)
         {
-            rend.sharedMaterial = startMaterial;
+            if(rend)
+                rend.sharedMaterial = startMaterial;
+
             for (int i = 0; i < additionalRenderers.Length; i++)
             {
                 additionalRenderers[i].sharedMaterial = additionalStartMaterials[i];
