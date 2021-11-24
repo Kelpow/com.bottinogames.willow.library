@@ -62,14 +62,13 @@ namespace Willow.IDLUI
         }
 
         private static List<IDLUIButton> _activeButtons;
-        private static List<IDLUIButton> activeButtons { get { if (_activeButtons == null) { _activeButtons = new List<IDLUIButton>(); } return _activeButtons; } } 
+        private static List<IDLUIButton> activeButtons { get { if (_activeButtons == null) { _activeButtons = new List<IDLUIButton>(); } return _activeButtons; } }
 
         public static void AddActiveButton(IDLUIButton button)
         {
             Init();
             IDLUIManager instance = Manager.instance;
             activeButtons.Add(button);
-            activeButtons.Sort((button1,button2)=> -button1.priority.CompareTo(button2.priority));
         }
 
         public static void RemoveActiveButton(IDLUIButton button)
@@ -167,6 +166,22 @@ namespace Willow.IDLUI
             {
                 if (Manager.camera == null || activeButtons.Count == 0 || freezeInput)
                     return;
+
+
+                activeButtons.Sort((button1, button2) =>
+                    {
+                        int prioSort = -button1.priority.CompareTo(button2.priority);
+                        if (prioSort == 0)
+                        {
+                            float b1Dist = (button1.transform.position - Manager.camera.transform.position).sqrMagnitude;
+                            float b2Dist = (button2.transform.position - Manager.camera.transform.position).sqrMagnitude;
+                            return b1Dist.CompareTo(b2Dist);
+                        }
+                        else
+                            return prioSort;
+                    }
+                );
+
 
                 Input input = Manager.camera.input; 
 

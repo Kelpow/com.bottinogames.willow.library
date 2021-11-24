@@ -382,71 +382,107 @@ namespace Willow.IDLUI
             else
             {
 
-                UnityEngine.GUI.enabled = focusedButton != button;
+                //UnityEngine.GUI.enabled = focusedButton != button;
+                
+                
                 GUILayout.BeginHorizontal("HelpBox");
                 {
-                    string recip = focusedDirection == UP || focusedDirection == DOWN ? "⇅" : "⇄";
-                    string direct = focusedDirection == UP ? "↑" :
-                        (focusedDirection == RIGHT ? "→" :
-                        (focusedDirection == LEFT ? "←" :
-                        "↓"));
+                    if (focusedButton == button)
+                    {
+                        int oldsize = UnityEngine.GUI.skin.button.fontSize;
+                        UnityEngine.GUI.skin.button.fontSize = 14;
+                        if (GUILayout.Button("↩", GUILayout.Width(25), GUILayout.Height(25)))
+                        {
+                            focusedButton = null;
+                        }
+                        UnityEngine.GUI.skin.button.fontSize = 16;
+                        if (GUILayout.Button("✖", GUILayout.Width(25), GUILayout.Height(25)))
+                        {
+                            switch (focusedDirection)
+                            {
+                                case UP:
+                                    focusedButton.up = null;
+                                    break;
+                                case DOWN:
+                                    focusedButton.down = null;
+                                    break;
+                                case LEFT:
+                                    focusedButton.left = null;
+                                    break;
+                                case RIGHT:
+                                    focusedButton.right = null;
+                                    break;
+                            }
+                            focusedButton = null;
+                        }
+
+                        UnityEngine.GUI.skin.button.fontSize = oldsize;
+                    }
+                    else
+                    {
+                        string recip = focusedDirection == UP || focusedDirection == DOWN ? "⇅" : "⇄";
+                        string direct = focusedDirection == UP ? "↑" :
+                            (focusedDirection == RIGHT ? "→" :
+                            (focusedDirection == LEFT ? "←" :
+                            "↓"));
 
 
-                    int oldsize = UnityEngine.GUI.skin.button.fontSize;
-                    UnityEngine.GUI.skin.button.fontSize = 16;
-                    if (GUILayout.Button(recip, GUILayout.Width(25), GUILayout.Height(25)))
-                    {
-                        switch (focusedDirection)
+                        int oldsize = UnityEngine.GUI.skin.button.fontSize;
+                        UnityEngine.GUI.skin.button.fontSize = 16;
+                        if (GUILayout.Button(recip, GUILayout.Width(25), GUILayout.Height(25)))
                         {
-                            case UP:
-                                focusedButton.up = button;
-                                button.down = focusedButton;
-                                focusedButton = null;
-                                break;
-                            case DOWN:
-                                focusedButton.down = button;
-                                button.up = focusedButton;
-                                focusedButton = null;
-                                break;
-                            case LEFT:
-                                focusedButton.left = button;
-                                button.right = focusedButton;
-                                focusedButton = null;
-                                break;
-                            case RIGHT:
-                                focusedButton.right = button;
-                                button.left = focusedButton;
-                                focusedButton = null;
-                                break;
-                            default:
-                                break;
+                            switch (focusedDirection)
+                            {
+                                case UP:
+                                    focusedButton.up = button;
+                                    button.down = focusedButton;
+                                    focusedButton = null;
+                                    break;
+                                case DOWN:
+                                    focusedButton.down = button;
+                                    button.up = focusedButton;
+                                    focusedButton = null;
+                                    break;
+                                case LEFT:
+                                    focusedButton.left = button;
+                                    button.right = focusedButton;
+                                    focusedButton = null;
+                                    break;
+                                case RIGHT:
+                                    focusedButton.right = button;
+                                    button.left = focusedButton;
+                                    focusedButton = null;
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
-                    }
-                    if (GUILayout.Button(direct, GUILayout.Width(25), GUILayout.Height(25)))
-                    {
-                        switch (focusedDirection)
+                        if (GUILayout.Button(direct, GUILayout.Width(25), GUILayout.Height(25)))
                         {
-                            case UP:
-                                focusedButton.up = button;
-                                focusedButton = null;
-                                break;
-                            case DOWN:
-                                focusedButton.down = button;
-                                focusedButton = null;
-                                break;
-                            case LEFT:
-                                focusedButton.left = button;
-                                focusedButton = null;
-                                break;
-                            case RIGHT:
-                                focusedButton.right = button;
-                                focusedButton = null;
-                                break;
-                            default:
-                                break;
+                            switch (focusedDirection)
+                            {
+                                case UP:
+                                    focusedButton.up = button;
+                                    focusedButton = null;
+                                    break;
+                                case DOWN:
+                                    focusedButton.down = button;
+                                    focusedButton = null;
+                                    break;
+                                case LEFT:
+                                    focusedButton.left = button;
+                                    focusedButton = null;
+                                    break;
+                                case RIGHT:
+                                    focusedButton.right = button;
+                                    focusedButton = null;
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
+                        UnityEngine.GUI.skin.button.fontSize = oldsize;
                     }
-                    UnityEngine.GUI.skin.button.fontSize = oldsize;
                 }
                 GUILayout.EndHorizontal();
                 UnityEngine.GUI.enabled = true;
