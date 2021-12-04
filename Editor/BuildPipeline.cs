@@ -26,7 +26,7 @@ public class BuildPipelineWindow : EditorWindow
     BuildOptions linRunOption = BuildOptions.None;
 #endif
 
-
+    bool building = false;
     public void OnGUI()
     {
         if (GUILayout.Button("Edit file and folder names"))
@@ -58,11 +58,10 @@ public class BuildPipelineWindow : EditorWindow
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Build"))
         {
-
             string path = System.IO.Directory.GetCurrentDirectory() + "/Builds";
             string[] levels = EditorBuildSettingsScene.GetActiveSceneList(EditorBuildSettings.scenes);
-            BuildTargetGroup activeGroup = EditorUserBuildSettings.selectedBuildTargetGroup;
-            BuildTarget activeTarget = EditorUserBuildSettings.activeBuildTarget;
+            //BuildTargetGroup activeGroup = EditorUserBuildSettings.selectedBuildTargetGroup;
+            //BuildTarget activeTarget = EditorUserBuildSettings.activeBuildTarget;
             if (linS)
             {
                 BuildPipeline.BuildPlayer(levels, $"{path}/{BuildPipelineNamesWindow.LinServerFolder}/{BuildPipelineNamesWindow.ServerExecutableName}.x86_64", BuildTarget.StandaloneLinux64, BuildOptions.EnableHeadlessMode | (run ? linRunOption : BuildOptions.None));
@@ -79,12 +78,14 @@ public class BuildPipelineWindow : EditorWindow
             {
                 BuildPipeline.BuildPlayer(levels, $"{path}/{BuildPipelineNamesWindow.WinClientFolder}/{BuildPipelineNamesWindow.ClientExecutableName}.exe", BuildTarget.StandaloneWindows64, run ? winRunOption : BuildOptions.None);
             }
-            EditorUserBuildSettings.SwitchActiveBuildTarget(activeGroup, activeTarget);
+            //EditorUserBuildSettings.SwitchActiveBuildTarget(activeGroup, activeTarget);
 
         }
         run = GUILayout.Toggle(run, "Run");
         GUILayout.EndHorizontal();
     }
+
+
 }
 
 public class BuildPipelineNamesWindow : EditorWindow
