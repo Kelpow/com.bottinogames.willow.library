@@ -27,9 +27,11 @@ public class BuildPipelineWindow : EditorWindow
 #endif
 
     bool building = false;
+
+
     public void OnGUI()
     {
-        if (GUILayout.Button("Edit file and folder names"))
+        if (GUILayout.Button("Edit file names, folder names, and finish bat."))
             BuildPipelineNamesWindow.ShowWindow(GUIUtility.GUIToScreenPoint(Event.current.mousePosition));
 
         GUILayout.BeginHorizontal();
@@ -80,9 +82,16 @@ public class BuildPipelineWindow : EditorWindow
             }
             //EditorUserBuildSettings.SwitchActiveBuildTarget(activeGroup, activeTarget);
 
+
+            if(new System.IO.FileInfo(BuildPipelineNamesWindow.buildFinishBatch).Extension == ".bat")
+            {
+                var processInfo = new System.Diagnostics.ProcessStartInfo(BuildPipelineNamesWindow.buildFinishBatch);
+                System.Diagnostics.Process.Start(processInfo);
+            }
         }
         run = GUILayout.Toggle(run, "Run");
         GUILayout.EndHorizontal();
+        
     }
 
 
@@ -105,6 +114,15 @@ public class BuildPipelineNamesWindow : EditorWindow
     private static string linClientFolder;
     private static string linServerFolder;
 
+    private static string _buildFinishBatch;
+
+    public static string buildFinishBatch
+    {
+        get { return PlayerPrefs.GetString("editor_buildpipeline_buildFinishBatch", ""); }
+        set { PlayerPrefs.SetString("editor_buildpipeline_buildFinishBatch", value); }
+    }
+
+
     static void UpdateStrings()
     {
         string appname = Application.productName.Replace(" ", "");
@@ -114,6 +132,8 @@ public class BuildPipelineNamesWindow : EditorWindow
         winServerFolder = PlayerPrefs.GetString("editor_buildpipeline_winServerFolder", "Windows Server");
         linClientFolder = PlayerPrefs.GetString("editor_buildpipeline_linClientFolder", "Linux");
         linServerFolder = PlayerPrefs.GetString("editor_buildpipeline_linServerFolder", "Linux Server");
+
+        _buildFinishBatch = buildFinishBatch;
     }
 
     static void PushStrings()
@@ -197,5 +217,17 @@ public class BuildPipelineNamesWindow : EditorWindow
         {
             PushStrings();
         }
+
+
+        EditorGUI.BeginChangeCheck();
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Build Finish Batch");
+        _buildFinishBatch = GUILayout.TextField(_buildFinishBatch);
+        GUILayout.EndHorizontal();
+        if (EditorGUI.EndChangeCheck())
+        {
+            buildFinishBatch = _buildFinishBatch;
+        }
+
     }
 }
