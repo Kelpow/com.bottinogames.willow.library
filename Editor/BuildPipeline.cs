@@ -222,7 +222,7 @@ public class BuildPipelineNamesWindow : EditorWindow
         EditorGUI.BeginChangeCheck();
         GUILayout.BeginHorizontal();
         GUILayout.Label("Build Finish Batch");
-        _buildFinishBatch = GUILayout.TextField(_buildFinishBatch);
+        _buildFinishBatch = GUILayout.TextArea(_buildFinishBatch);
         GUILayout.EndHorizontal();
         if (EditorGUI.EndChangeCheck())
         {
