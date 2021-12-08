@@ -71,7 +71,7 @@ public class Sous : MonoBehaviour {
                             int texHalfWidth = scaledTexWidth / 2;
 
                             GUI.BeginGroup(new Rect(halfWidth - texHalfWidth, 0, halfWidth - texHalfWidth + scaledTexWidth, Screen.height));
-                            GUI.DrawTexture(new Rect(0, 0, scaledTexWidth, Screen.height), lowResTexture);
+                            GUI.DrawTexture(new Rect(0, 0, scaledTexWidth, Screen.height), lowResTexture, ScaleMode.StretchToFill, false);
                             GUI.EndGroup();
                         } else
                         {
@@ -80,7 +80,7 @@ public class Sous : MonoBehaviour {
                             int texHalfHeight = scaledTexHeight / 2;
 
                             GUI.BeginGroup(new Rect(0, halfHeight - texHalfHeight, Screen.width, halfHeight - texHalfHeight + scaledTexHeight));
-                            GUI.DrawTexture(new Rect(0, 0, Screen.width, scaledTexHeight), lowResTexture);
+                            GUI.DrawTexture(new Rect(0, 0, Screen.width, scaledTexHeight), lowResTexture, ScaleMode.StretchToFill, false);
                             GUI.EndGroup();
                         }
 
