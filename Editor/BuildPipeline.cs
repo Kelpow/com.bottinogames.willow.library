@@ -82,10 +82,11 @@ public class BuildPipelineWindow : EditorWindow
             }
             //EditorUserBuildSettings.SwitchActiveBuildTarget(activeGroup, activeTarget);
 
-
-            if(new System.IO.FileInfo(BuildPipelineNamesWindow.buildFinishBatch).Extension == ".bat")
+            string batchPath = BuildPipelineNamesWindow.buildFinishBatch;
+            if (new System.IO.FileInfo(batchPath).Extension == ".bat")
             {
-                var processInfo = new System.Diagnostics.ProcessStartInfo(BuildPipelineNamesWindow.buildFinishBatch);
+                var processInfo = new System.Diagnostics.ProcessStartInfo(batchPath);
+                processInfo.WorkingDirectory = batchPath.Substring(0, batchPath.LastIndexOf("/"));
                 System.Diagnostics.Process.Start(processInfo);
             }
         }
