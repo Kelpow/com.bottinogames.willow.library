@@ -13,11 +13,11 @@ namespace Willow.IDLUI
 {
     public class IDLUIButton : MonoBehaviour
     {
-        
 
-        private void OnEnable() { Manager.AddActiveButton(this);}
+        private void OnEnable() { Manager.AddActiveButton(this); onEnabled.Invoke(); }
 
-        private void OnDisable() { Manager.RemoveActiveButton(this); }
+        private void OnDisable() { Manager.RemoveActiveButton(this); onDisabled.Invoke(); }
+
 
         public Manager.Category category;
 
@@ -28,6 +28,9 @@ namespace Willow.IDLUI
         public UnityEvent onSelect = new UnityEvent();
         public UnityEvent onGainFocus = new UnityEvent();
         public UnityEvent onLoseFocus = new UnityEvent();
+        public UnityEvent onEnabled = new UnityEvent();
+        public UnityEvent onDisabled = new UnityEvent();
+
 
         [HideInInspector]
         public IDLUIButton up;
@@ -67,17 +70,23 @@ namespace Willow.IDLUI
                 button.onSelect.AddListener(OnSelect);
                 button.onGainFocus.AddListener(OnGainFocus);
                 button.onLoseFocus.AddListener(OnLoseFocus);
+                button.onEnabled.AddListener(OnButtonEnabled);
+                button.onDisabled.AddListener(OnButtonDisabled);
             }
             private void OnDisable() 
             {
                 button.onSelect.RemoveListener(OnSelect);
                 button.onGainFocus.RemoveListener(OnGainFocus);
                 button.onLoseFocus.RemoveListener(OnLoseFocus);
+                button.onEnabled.RemoveListener(OnButtonEnabled);
+                button.onDisabled.RemoveListener(OnButtonDisabled);
             }
 
             protected virtual void OnSelect() { }
             protected virtual void OnGainFocus() { }
             protected virtual void OnLoseFocus() { }
+            protected virtual void OnButtonEnabled() { }
+            protected virtual void OnButtonDisabled() { }
         }
 
 #if UNITY_EDITOR
