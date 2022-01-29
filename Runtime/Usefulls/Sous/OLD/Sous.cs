@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Willow.Library;
-public class Sous : MonoBehaviour {
+public class Sous : MonoBehaviour
+{
 
     public enum Mode
     {
@@ -19,9 +20,9 @@ public class Sous : MonoBehaviour {
 
     RenderTexture lowResTexture;
 
-    void Start () 
+    void Start()
     {
-        SetResolution(width, height);    
+        SetResolution(width, height);
 
         GetComponent<Camera>().allowMSAA = false;
     }
@@ -52,3 +53,4 @@ public class Sous : MonoBehaviour {
 
     public RenderTexture GetTex() => lowResTexture;
 }
+
