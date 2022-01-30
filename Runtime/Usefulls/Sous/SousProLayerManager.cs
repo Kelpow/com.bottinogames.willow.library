@@ -101,8 +101,8 @@ public class SousProLayerManager : MonoBehaviour
 
     private void Awake()
     {
-
-        postProcessMaterial = new Material(postProcessEffect);
+        if(postProcessEffect)
+            postProcessMaterial = new Material(postProcessEffect);
 
 
         if(managerDictionary.ContainsKey(layer))
