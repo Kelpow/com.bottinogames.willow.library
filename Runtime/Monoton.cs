@@ -34,7 +34,7 @@ namespace Willow.Library
                     DestroyImmediate(this.gameObject);
             } else
             {
-                instance = this;
+                instance = this.GetComponent<T>();
             }
         }
     }
