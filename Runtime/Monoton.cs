@@ -32,6 +32,9 @@ namespace Willow.Library
                     Destroy(this.gameObject);
                 else
                     DestroyImmediate(this.gameObject);
+            } else
+            {
+                instance = this;
             }
         }
     }
