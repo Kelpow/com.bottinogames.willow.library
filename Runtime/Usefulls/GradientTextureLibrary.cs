@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CreateAssetMenu]
+[CreateAssetMenu(order = 325)]
 public class GradientTextureLibrary : ScriptableObject
 {
     public enum Resolution
@@ -71,15 +71,19 @@ public class GradientTextureLibraryEditor : Editor
 
             GUILayout.BeginVertical("HelpBox");
             {
-                string newName = EditorGUILayout.DelayedTextField(data.name);
-                if (data.name != newName)
+                GUILayout.BeginHorizontal();
                 {
-                    data.name = newName;
-                    data.texture.name = newName;
+                    string newName = EditorGUILayout.DelayedTextField(data.name);
+                    if (data.name != newName)
+                    {
+                        data.name = newName;
+                        data.texture.name = newName;
 
-                    Reimport(target);
-                    EditorApplication.delayCall += DelayedSort(target.textureData);
+                        Reimport(target);
+                        EditorApplication.delayCall += DelayedSort(target.textureData);
+                    }
                 }
+                GUILayout.EndHorizontal();
 
                 EditorGUI.BeginChangeCheck();
                 Gradient newGradient = EditorGUILayout.GradientField(data.gradient);
@@ -90,7 +94,7 @@ public class GradientTextureLibraryEditor : Editor
                     data.gradient = newGradient;
                     GradientTextureLibrary.WriteGradientToTexture(data.texture, data.gradient);
                 }
-                
+
                 EditorGUI.BeginChangeCheck();
                 TextureWrapMode newWrap = (TextureWrapMode)EditorGUILayout.EnumPopup("Wrap Mode", data.texture.wrapMode);
                 FilterMode newFilter = (FilterMode)EditorGUILayout.EnumPopup("Filter Mode", data.texture.filterMode);
@@ -101,11 +105,11 @@ public class GradientTextureLibraryEditor : Editor
                     data.texture.filterMode = newFilter;
                 }
                 EditorGUI.indentLevel = 1;
-                if(data.foldout = EditorGUILayout.Foldout(data.foldout, "Advanced"))
+                if (data.foldout = EditorGUILayout.Foldout(data.foldout, "Advanced"))
                 {
                     EditorGUI.BeginChangeCheck();
-                    GradientTextureLibrary.Resolution newRes = (GradientTextureLibrary.Resolution)EditorGUILayout.EnumPopup("Resolution",(GradientTextureLibrary.Resolution)data.texture.width);
-                    TextureFormat newFormat = (TextureFormat)EditorGUILayout.EnumPopup("Texture Format",data.texture.format);
+                    GradientTextureLibrary.Resolution newRes = (GradientTextureLibrary.Resolution)EditorGUILayout.EnumPopup("Resolution", (GradientTextureLibrary.Resolution)data.texture.width);
+                    TextureFormat newFormat = (TextureFormat)EditorGUILayout.EnumPopup("Texture Format", data.texture.format);
                     bool newMip = EditorGUILayout.Toggle("Generate Mip Maps", data.texture.mipmapCount != 1);
                     if (EditorGUI.EndChangeCheck())
                     {
@@ -117,29 +121,33 @@ public class GradientTextureLibraryEditor : Editor
                 }
                 EditorGUI.indentLevel = 0;
 
-                if (GUILayout.Button("Delete") && EditorUtility.DisplayDialog("Delete Gradient?", "Are you sure you want to destroy this gradient? This cannot be undone and will clear all undo's for this library.", "Destroy", "Cancel"))
+                GUILayout.BeginHorizontal();
                 {
-                    GUI.FocusControl(null);
+                    if (GUILayout.Button("Delete") && EditorUtility.DisplayDialog("Delete Gradient?", "Are you sure you want to destroy this gradient? This cannot be undone and will clear the undo history for this object for this library.", "Destroy", "Cancel"))
+                    {
+                        GUI.FocusControl(null);
 
-                    Undo.ClearUndo(target);
-                    foreach (var d in target.textureData)
-                        Undo.ClearUndo(d.texture);
+                        Undo.ClearUndo(target);
+                        foreach (var d in target.textureData)
+                            Undo.ClearUndo(d.texture);
 
-                    DestroyImmediate(data.texture, true);
+                        DestroyImmediate(data.texture, true);
 
-                    EditorApplication.delayCall += DelayedRemove(target.textureData, data);
+                        EditorApplication.delayCall += DelayedRemove(target.textureData, data);
 
-                    EditorUtility.SetDirty(target);
+                        EditorUtility.SetDirty(target);
 
-                    Reimport(target);
+                        Reimport(target);
 
-                    EditorApplication.delayCall += DelayedSort(target.textureData);
+                        EditorApplication.delayCall += DelayedSort(target.textureData);
+                    }
                 }
+                GUILayout.EndHorizontal();
             }
             GUILayout.EndVertical();
         }
 
-        if (GUILayout.Button("Add New Gradient Texture") && EditorUtility.DisplayDialog("Add Gradient?", "Are you sure you want to add a gradient? This will clear all undo's for this library.", "Add", "Cancel"))
+        if (GUILayout.Button("Add New Gradient Texture") && EditorUtility.DisplayDialog("Add Gradient?", "Are you sure you want to add a gradient? This will clear the undo history for this library.", "Add", "Cancel"))
         {
             Undo.ClearUndo(target);
             foreach (var data in target.textureData)

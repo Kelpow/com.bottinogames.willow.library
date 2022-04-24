@@ -143,6 +143,14 @@ namespace Willow.Library
         }
 
 
+        public static string Colorize(this string value, Color color)
+        {
+            return $"<color={ColorUtility.ToHtmlStringRGBA(color)}>{value}</color>";
+        }
+
+
+
+
 
         public static byte[] ToByteArray(this object obj)
         {
