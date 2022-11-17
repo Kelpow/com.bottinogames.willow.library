@@ -41,6 +41,18 @@ namespace Willow.Library
             return vector - (axis * Vector3.Dot(vector, axis));
         }
 
+        /// <summary>
+        /// Optionally replace any components of a vector.
+        /// </summary>
+        public static Vector3 Replace(this Vector3 v, float? x = null, float? y = null, float? z = null)
+        {
+            return new Vector3(
+                x ?? v.x,
+                y ?? v.y,
+                z ?? v.z
+            );
+        }
+
         #endregion
 
         #region Quaternions
@@ -143,6 +155,18 @@ namespace Willow.Library
         }
 
 
+        public static bool Populate<T>(this MonoBehaviour mono, ref T component) where T : Component
+        {
+            return mono.TryGetComponent<T>(out component);
+        }
+        public static bool Populate<T>(this GameObject go, ref T component) where T : Component
+        {
+            return go.TryGetComponent<T>(out component);
+        }
+
+
+
+
         public static string Colorize(this string value, Color color)
         {
             return $"<color={ColorUtility.ToHtmlStringRGBA(color)}>{value}</color>";
@@ -174,5 +198,6 @@ namespace Willow.Library
 
 
         #endregion
+
     }
 }
