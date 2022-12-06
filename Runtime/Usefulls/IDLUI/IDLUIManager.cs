@@ -78,6 +78,10 @@ namespace Willow.IDLUI
 
         private static bool isFocused;
         private static IDLUIButton focus;
+        public static IDLUIButton GetFocused()
+        {
+            return focus;
+        }
 
         public static void FocusButton(IDLUIButton button, bool ignoreOnAnalogue = true)
         {
