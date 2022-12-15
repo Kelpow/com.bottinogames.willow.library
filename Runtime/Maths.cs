@@ -235,6 +235,23 @@ namespace Willow.Library
         }
         #endregion
 
+        #region ====Physics====
+        public static float Drag(float velocity, float drag, float deltaTime)
+        {
+            return velocity * (1f - deltaTime * drag);
+        }
+
+        public static Vector2 Drag(Vector2 velocity, float drag, float deltaTime)
+        {
+            return velocity * (1f - deltaTime * drag);
+        }
+
+        public static Vector3 Drag(Vector3 velocity, float drag, float deltaTime)
+        {
+            return velocity * (1f - deltaTime * drag);
+        }
+        #endregion
+
         /// <summary> Returns the nearest point on line segment AB to point P. </summary>
         public static Vector3 NearestPointOnLine (Vector3 a, Vector3 b, Vector3 p)
         {
@@ -279,5 +296,6 @@ namespace Willow.Library
             bary.x = 1.0f - bary.y - bary.z;
             return bary;
         }
+
     }
 }
