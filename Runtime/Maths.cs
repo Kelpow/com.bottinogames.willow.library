@@ -238,17 +238,17 @@ namespace Willow.Library
         #region ====Physics====
         public static float Drag(float velocity, float drag, float deltaTime)
         {
-            return velocity * (1f - deltaTime * drag);
+            return velocity * (1f - deltaTime * drag).Clamp01();
         }
 
         public static Vector2 Drag(Vector2 velocity, float drag, float deltaTime)
         {
-            return velocity * (1f - deltaTime * drag);
+            return velocity * (1f - deltaTime * drag).Clamp01();
         }
 
         public static Vector3 Drag(Vector3 velocity, float drag, float deltaTime)
         {
-            return velocity * (1f - deltaTime * drag);
+            return velocity * (1f - deltaTime * drag).Clamp01();
         }
         #endregion
 
