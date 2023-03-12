@@ -120,7 +120,7 @@ namespace Willow
                 }
             }
 
-            OnDrawGui.Invoke();
+            OnDrawGui?.Invoke();
         }
     }
 }
