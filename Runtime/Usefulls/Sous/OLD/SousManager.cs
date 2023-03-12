@@ -22,12 +22,14 @@ namespace Willow
             }
         }
 
+        public static System.Action OnDrawGui;
+
         public List<Sous> activeSous;
 
         Texture2D filler;
         GUIStyle fillerStyle;
 
-
+        
         private void Awake()
         {
             activeSous = new List<Sous>();
@@ -117,6 +119,8 @@ namespace Willow
                     }
                 }
             }
+
+            OnDrawGui.Invoke();
         }
     }
 }
