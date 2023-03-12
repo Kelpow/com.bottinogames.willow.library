@@ -119,8 +119,10 @@ namespace Willow
                     }
                 }
             }
-
+            UnityEngine.GUI.depth = 999;
+            UnityEngine.GUILayout.BeginArea(new Rect(0f, 0f, Screen.width, Screen.height));
             OnDrawGui?.Invoke();
+            UnityEngine.GUILayout.EndArea();
         }
     }
 }
