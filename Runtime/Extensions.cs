@@ -111,6 +111,32 @@ namespace Willow.Library
         {
             return Mathf.Abs(value);
         }
+
+        /// <summary>
+        /// Use a float as a timer, 'cause you have no self respect
+        /// </summary>
+        /// <param name="delta">The delta time with which to decrement the timer</param>
+        /// <returns>returns true if the timer has expired</returns>
+        public static bool AsTimer(this ref float value, float delta)
+        {
+            value -= delta;
+            return value <= 0f;
+        }
+        #endregion
+
+        #region Ints
+
+        /// <summary>
+        /// Use a int as a countdown, 'cause you've got low self esteem
+        /// </summary>
+        /// <param name="delta">The delta with which to decrement the counter</param>
+        /// <returns>returns true if the countdown has ended</returns>
+        public static bool AsCountdown(this ref int value, int delta)
+        {
+            value -= delta;
+            return value <= 0;
+        }
+
         #endregion
 
         #region Audio
