@@ -57,9 +57,9 @@ namespace Willow.Library
 
         #region Quaternions
         static readonly Quaternion FORUP_SWAPROT = new Quaternion(0f,0.7f,0.7f,0f);
-        public static void SwapForwardAndUp(this Quaternion rotation)
+        public static Quaternion SwapForwardAndUp(this Quaternion rotation)
         {
-            rotation = rotation * FORUP_SWAPROT;
+            return rotation * FORUP_SWAPROT;
         }
 
         #endregion
