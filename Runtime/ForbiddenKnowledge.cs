@@ -56,6 +56,17 @@ namespace Willow.Library
         }
         #endregion
 
+        #region Logging
+
+        public delegate RecursiveLogging RecursiveLogging(string log);
+
+        public static RecursiveLogging LogManyThings(string input)
+        {
+            Debug.Log(input);
+            return LogManyThings;
+        }
+
+        #endregion
 
         #region Big Shit
         private static GUIContent BIGSHITCONTENT = new GUIContent();
