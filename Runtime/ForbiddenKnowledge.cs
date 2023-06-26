@@ -58,9 +58,9 @@ namespace Willow.Library
 
         #region Logging
 
-        public delegate RecursiveLogging RecursiveLogging(string log);
+        public delegate RecursiveLogging RecursiveLogging(object log);
 
-        public static RecursiveLogging LogManyThings(string input)
+        public static RecursiveLogging LogManyThings(object input)
         {
             Debug.Log(input);
             return LogManyThings;
