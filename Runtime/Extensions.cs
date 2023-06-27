@@ -53,6 +53,42 @@ namespace Willow.Library
             );
         }
 
+        /// <summary>
+        /// Optionally replace any components of a vector.
+        /// </summary>
+        public static Vector2 Replace(this Vector2 v, float? x = null, float? y = null)
+        {
+            return new Vector2(
+                x ?? v.x,
+                y ?? v.y
+            );
+        }
+
+        /// <summary>
+        /// Optionally add to any components of a vector.
+        /// </summary>
+        public static Vector3 Add(this Vector3 v, float x = 0f, float y = 0f, float z = 0f)
+        {
+            return new Vector3(
+                v.x + x,
+                v.y + y,
+                v.z + z
+                );
+        }
+        
+        /// <summary>
+        /// Optionally add to any components of a vector.
+        /// </summary>
+        public static Vector2 Add(this Vector2 v, float x = 0f, float y = 0f)
+        {
+            return new Vector2(
+                v.x + x,
+                v.y + y
+                );
+        }
+
+        
+
         #endregion
 
         #region Quaternions
