@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.IO;
+using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Willow.Library
@@ -87,8 +89,25 @@ namespace Willow.Library
                 );
         }
 
-        
 
+
+        #endregion
+        #region Vector Arrays
+        public static Vector3 NearestTo(this IEnumerable<Vector3> enumerable, Vector3 point)
+        {
+            float sqrdist = float.MaxValue;
+            Vector3 nearest = Vector3.zero;
+            foreach (Vector3 vector in enumerable)
+            {
+                float sd = (point - vector).sqrMagnitude;
+                if(sd < sqrdist)
+                {
+                    sqrdist = sd;
+                    nearest = vector;
+                }
+            }
+            return nearest;
+        }
         #endregion
 
         #region Quaternions
@@ -149,6 +168,14 @@ namespace Willow.Library
         }
 
         /// <summary>
+        /// returns the module of value % divisor, will always be positive
+        /// </summary>
+        public static float Mod(this float value, float divisor)
+        {
+            return ((value % divisor) + divisor) % divisor;
+        }
+
+        /// <summary>
         /// Use a float as a timer, 'cause you have no self respect
         /// </summary>
         /// <param name="delta">The delta time with which to decrement the timer</param>
@@ -163,11 +190,19 @@ namespace Willow.Library
         #region Ints
 
         /// <summary>
+        /// returns the module of value % divisor, will always be positive
+        /// </summary>
+        public static int Mod(this int value, int divisor)
+        {
+            return ((value % divisor) + divisor) % divisor;
+        }
+
+        /// <summary>
         /// Use a int as a countdown, 'cause you've got low self esteem
         /// </summary>
         /// <param name="delta">The delta with which to decrement the counter</param>
         /// <returns>returns true if the countdown has ended</returns>
-        public static bool AsCountdown(this ref int value, int delta)
+        public static bool AsTimer(this ref int value, int delta)
         {
             value -= delta;
             return value <= 0;
