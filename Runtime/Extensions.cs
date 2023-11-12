@@ -67,6 +67,25 @@ namespace Willow.Library
         }
 
         /// <summary>
+        /// Remaps a vector component-wise from oldmin-oldmax to newmin-newmax
+        /// </summary>
+        public static Vector3 Remap(this Vector3 v, float oldMin, float oldMax, float newMin, float newMax)
+        {
+            return new Vector3(v.x.Remap(oldMin, oldMax, newMin, newMax), v.y.Remap(oldMin, oldMax, newMin, newMax), v.z.Remap(oldMin, oldMax, newMin, newMax)); ;
+        }
+
+        /// <summary>
+        /// Remaps a vectors of numbers to 0-1.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="zero">the value which will be remapped to 0</param>
+        /// <param name="one">the value which will be remapped to 1</param>
+        public static Vector3 Remap01(this Vector3 v, float zero, float one)
+        {
+            return new Vector3(v.x.Remap01(zero, one), v.y.Remap01(zero, one), v.z.Remap01(zero, one));
+        }
+
+        /// <summary>
         /// Optionally add to any components of a vector.
         /// </summary>
         public static Vector3 Add(this Vector3 v, float x = 0f, float y = 0f, float z = 0f)
@@ -148,12 +167,19 @@ namespace Willow.Library
         }
 
         /// <summary>
+        /// Remaps a range of numbers from oldmin-oldmax to newmin-newmax.
+        /// </summary>
+        public static float Remap(this float value, float oldMin, float oldMax, float newMin, float newMax)
+        {
+            return (value - oldMin) / (oldMax - oldMin) * (newMax - newMin) + newMin;
+        }
+
+        /// <summary>
         /// Remaps a range of numbers to 0-1.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="zero">the value which will be remapped to 0</param>
         /// <param name="one">the value which will be remapped to 1</param>
-        /// <returns>the remaped float</returns>
         public static float Remap01(this float value, float zero, float one)
         {
             return (value - zero) / (one - zero);
