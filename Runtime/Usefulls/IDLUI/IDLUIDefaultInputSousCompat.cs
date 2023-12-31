@@ -5,7 +5,7 @@ using Willow.Library;
 
 namespace Willow.IDLUI
 {
-    [RequireComponent(typeof(SousPro))]
+    [RequireComponent(typeof(Sous))]
     public class IDLUIDefaultInputSousCompat : MonoBehaviour,Input
     {
 #if IDLUI_DEFAULT_CUSTOM_INPUT
@@ -82,43 +82,40 @@ namespace Willow.IDLUI
     
         public bool Digital_select { get => UnityEngine.Input.GetButtonDown(INPT_SELECT); }
 
-        SousPro sous;
-        private void Awake() { sous = GetComponent<SousPro>(); }
+        Sous sous;
+        private void Awake() { sous = GetComponent<Sous>(); }
 
         public Vector3 Analogue_screenPosition { 
             get
             {
-                SousProLayerManager manager = SousProLayerManager.managerDictionary[sous.layer];
-
-
                 if (!sous)
                     return UnityEngine.Input.mousePosition;
 
                 
 
-                float widthScale = (float)Screen.width / (float)manager.width;
-                float scaledHeight = widthScale * manager.height;
+                float widthScale = (float)Screen.width / (float)sous.width;
+                float scaledHeight = widthScale * sous.height;
                 if (scaledHeight > Screen.height)
                 {
-                    float heightScale = (float)Screen.height / (float)manager.height;
+                    float heightScale = (float)Screen.height / (float)sous.height;
                     int halfWidth = Screen.width / 2;
-                    int scaledTexWidth = Mathf.FloorToInt(manager.width * heightScale);
+                    int scaledTexWidth = Mathf.FloorToInt(sous.width * heightScale);
                     int texHalfWidth = scaledTexWidth / 2;
 
                     return new Vector3(
-                        ((UnityEngine.Input.mousePosition.x - (halfWidth - texHalfWidth)).Remap01(0f, scaledTexWidth).Clamp01() * manager.width),
-                        (UnityEngine.Input.mousePosition.y.Remap01(0f, Screen.height).Clamp01() * manager.height)
+                        ((UnityEngine.Input.mousePosition.x - (halfWidth - texHalfWidth)).Remap01(0f, scaledTexWidth).Clamp01() * sous.width),
+                        (UnityEngine.Input.mousePosition.y.Remap01(0f, Screen.height).Clamp01() * sous.height)
                         );
                 }
                 else
                 {
                     int halfHeight = Screen.height / 2;
-                    int scaledTexHeight = Mathf.FloorToInt(manager.height * widthScale);
+                    int scaledTexHeight = Mathf.FloorToInt(sous.height * widthScale);
                     int texHalfHeight = scaledTexHeight / 2;
 
                     return new Vector3(
-                        (UnityEngine.Input.mousePosition.x.Remap01(0f, Screen.width).Clamp01() * manager.width),
-                        ((UnityEngine.Input.mousePosition.y - (halfHeight - texHalfHeight)).Remap01(0f, scaledTexHeight).Clamp01() * manager.height)
+                        (UnityEngine.Input.mousePosition.x.Remap01(0f, Screen.width).Clamp01() * sous.width),
+                        ((UnityEngine.Input.mousePosition.y - (halfHeight - texHalfHeight)).Remap01(0f, scaledTexHeight).Clamp01() * sous.height)
                         );
                 }
             }
