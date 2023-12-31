@@ -5,6 +5,7 @@ using Willow.Library;
 
 namespace Willow
 {
+    [DefaultExecutionOrder(250)]
     public class Sous : MonoBehaviour
     {
         public enum Mode
@@ -22,7 +23,7 @@ namespace Willow
 
         RenderTexture lowResTexture;
 
-        void Start()
+        void Awake()
         {
             SetResolution(width, height);
 
