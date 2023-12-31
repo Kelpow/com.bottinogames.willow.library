@@ -67,6 +67,19 @@ namespace Willow.Library
         }
 
         /// <summary>
+        /// Optionally replace any components of a vector.
+        /// </summary>
+        public static Vector4 Replace(this Vector4 v, float? x = null, float? y = null, float? z = null, float? w = null)
+        {
+            return new Vector4(
+                x ?? v.x,
+                y ?? v.y,
+                z ?? v.z,
+                w ?? v.w
+            );
+        }
+
+        /// <summary>
         /// Remaps a vector component-wise from oldmin-oldmax to newmin-newmax
         /// </summary>
         public static Vector3 Remap(this Vector3 v, float oldMin, float oldMax, float newMin, float newMax)
