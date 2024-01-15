@@ -42,7 +42,6 @@ public class AutoPopAttributePropertyDrawer : PropertyDrawer
 
         if(Application.isPlaying)
         {
-            property.serializedObject.Update();
             EditorGUI.PropertyField(position, property, label, true);
             property.serializedObject.ApplyModifiedProperties();
             return;
@@ -72,13 +71,10 @@ public class AutoPopAttributePropertyDrawer : PropertyDrawer
         if(GUI.Button(position, RefreshIcon, EditorStyles.miniButton))
         {
             property.objectReferenceValue = null;
-            property.serializedObject.ApplyModifiedProperties();
             isPropertyValueNull = true;
         }
         GUI.enabled = cachedEnable;
         
-
-        property.serializedObject.Update();
         if (isPropertyValueNull)
         {
             var type = GetPropertyType(property);
