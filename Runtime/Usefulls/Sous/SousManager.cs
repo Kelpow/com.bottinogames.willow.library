@@ -67,7 +67,7 @@ namespace Willow
             foreach (Sous sous in activeSous)
             {
                 RenderTexture lowResTexture = sous.GetTex();
-
+                UnityEngine.GUI.color = sous.alphaBlend ? new Color(1f, 1f, 1f, sous.alphaMult) : Color.white;
                 if (lowResTexture)
                 {
                     switch (sous.mode)

@@ -19,6 +19,7 @@ namespace Willow
         public int width = 320;
         public int height = 240;
         public bool alphaBlend = false;
+        [Range(0f, 1f)] public float alphaMult = 1f;
         public int depth;
 
         RenderTexture lowResTexture;
