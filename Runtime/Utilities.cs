@@ -7,7 +7,7 @@ namespace Willow
 {
     public static class Utilities
     {
-        public static IEnumerator TransitionCoroutine(float length, Action<float> action)
+        public static IEnumerator TransitionCoroutine(float length, Action<float> action, bool isRealtime = false)
         {
             float time = length;
             while (time > 0)
@@ -15,7 +15,7 @@ namespace Willow
                 float t = (length - time) / length;
                 action.Invoke(t);
                 yield return null;
-                time -= Time.deltaTime;
+                time -= isRealtime ? Time.unscaledDeltaTime : Time.deltaTime;
             }
             action.Invoke(1f);
         }
