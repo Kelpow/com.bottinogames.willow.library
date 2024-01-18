@@ -5,7 +5,9 @@ namespace Willow.Library
         public float min;
         public float max;
 
-        public MinMax(float Min = float.MaxValue, float Max = float.MinValue)
+        public MinMax Default => new MinMax(float.MaxValue, float.MinValue);
+
+        public MinMax(float Min, float Max)
         {
             min = Min;
             max = Max;
@@ -18,5 +20,10 @@ namespace Willow.Library
         }
 
         public float RemapValue(float value) => value.Remap01(min, max);
+
+        public override string ToString()
+        {
+            return $"({min}->{max})";
+        }
     }
 }
