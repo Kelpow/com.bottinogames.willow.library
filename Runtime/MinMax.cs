@@ -5,7 +5,7 @@ namespace Willow.Library
         public float min;
         public float max;
 
-        public MinMax Default => new MinMax(float.MaxValue, float.MinValue);
+        public static MinMax Default => new MinMax(float.MaxValue, float.MinValue);
 
         public MinMax(float Min, float Max)
         {
