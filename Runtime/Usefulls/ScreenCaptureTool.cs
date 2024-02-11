@@ -10,17 +10,25 @@ public static class ScreenCaptureTool
     const string secondChars = "AEIOUY";
     const string thirdChars = "ABDEFGIJKLMNOPRSTVXZ";
 
+#if UNITY_EDITOR
     [MenuItem("ScreenCap/Capture Screenshot/1x", priority = 1)]
+#endif
     public static void CaptureScreenX1()
     {
         CaptureScreen(1);
     }
+
+#if UNITY_EDITOR
     [MenuItem("ScreenCap/Capture Screenshot/2x", priority = 2)]
+#endif
     public static void CaptureScreenX2()
     {
         CaptureScreen(2);
     }
+
+#if UNITY_EDITOR
     [MenuItem("ScreenCap/Capture Screenshot/4x", priority = 4)]
+#endif
     public static void CaptureScreenX4()
     {
         CaptureScreen(4);
