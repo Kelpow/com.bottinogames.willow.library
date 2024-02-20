@@ -60,6 +60,10 @@ namespace Willow
 
         void OnGUI()
         {
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+                return;
+#endif
             UnityEngine.GUI.depth = 1001;
             UnityEngine.GUI.Box(new Rect(0,0,Screen.width,Screen.height), GUIContent.none, fillerStyle);
             UnityEngine.GUI.depth = 1000;
