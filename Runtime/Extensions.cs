@@ -262,6 +262,21 @@ namespace Willow.Library
         }
         #endregion
 
+        #region Curves
+
+        public static float Evaluate(this AnimationCurve curve, Timer timer)
+        {
+            return curve.Evaluate(timer.time01Unclamped);
+        }
+
+        public static bool RunningTimer(this AnimationCurve curve, Timer timer, out float evaluation)
+        {
+            evaluation = curve.Evaluate(timer.time01Unclamped);
+            return timer.running;
+        }
+
+        #endregion
+        
         #region Misc
         public static bool MouseOverlapsBounds(this Camera camera, Bounds bounds, Transform parent = null)
         {
