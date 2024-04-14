@@ -67,9 +67,9 @@ namespace Willow.Library
         public bool running { get { return time <= duration; } }
 
         /// <summary>
-        /// Returns true only if Start() has never been called, or Reset() was called last. Will not be true even if the timer has run for its duration.
+        /// Returns true only if Start() has never been called, or Reset() was called last. Will not be true even if the timer has run for its duration or Stop() was called.
         /// </summary>
-        public bool hasRun { get { return timerStartTime == -duration; } }
+        public bool started { get { return timerStartTime == -duration; } }
 
         /// <summary>
         /// A tool for measuring time.
