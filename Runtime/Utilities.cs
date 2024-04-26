@@ -76,21 +76,21 @@ namespace Willow
             return newMesh;
         }
 
-        public static float GetPlaceInLine(float maxDist, float lineSize, int count, int index)
+        public static float GetPlaceInLine(int index, int count, float distanceBetween, float maxSize = 0f)
         {
             float dist;
             float size;
-            float biggestSize = maxDist * (count - 1);
+            float biggestSize = distanceBetween * (count - 1);
 
-            if (maxDist > 0 && biggestSize > lineSize)
+            if (maxSize > 0 && biggestSize > maxSize)
             {
-                dist = lineSize / (count - 1);
-                size = lineSize;
+                dist = maxSize / (count - 1);
+                size = maxSize;
             }
             else
             {
-                dist = maxDist;
-                size = maxDist * (count - 1);
+                dist = distanceBetween;
+                size = distanceBetween * (count - 1);
             }
 
             float fromLeft = dist * index;
