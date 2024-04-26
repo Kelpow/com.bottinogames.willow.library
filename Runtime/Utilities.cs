@@ -75,5 +75,27 @@ namespace Willow
             MakeLineMesh(basemesh, newMesh);
             return newMesh;
         }
+
+        public static float GetPlaceInLine(float maxDist, float lineSize, int count, int index)
+        {
+            float dist;
+            float size;
+            float biggestSize = maxDist * (count - 1);
+
+            if (maxDist > 0 && biggestSize > lineSize)
+            {
+                dist = lineSize / (count - 1);
+                size = lineSize;
+            }
+            else
+            {
+                dist = maxDist;
+                size = maxDist * (count - 1);
+            }
+
+            float fromLeft = dist * index;
+
+            return fromLeft - (size * 0.5f);
+        }
     }
 }
