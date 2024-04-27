@@ -8,7 +8,6 @@ using UnityEditor;
 [Serializable]
 public struct InspectorButton
 {
-#if UNITY_EDITOR
     private string method { get; }
     private bool shouldRecordUndo { get; }
 
@@ -18,10 +17,6 @@ public struct InspectorButton
         shouldRecordUndo = recordUndo;
     }
     public static implicit operator InspectorButton(string nameof) => new InspectorButton(nameof, true);
-#else
-    public static implicit operator InspectorButton(string nameof) => null;
-    public InspectorButton(string nameof, bool recordUndo) {}
-#endif
 
 #if UNITY_EDITOR
     [CustomPropertyDrawer(typeof(InspectorButton))]
