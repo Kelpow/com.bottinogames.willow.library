@@ -17,16 +17,11 @@ public static class SaveAssetIfDirty
         }
     }
     
-    [MenuItem("Assets/Save All Asssets", priority = 39)]
+    [MenuItem("Assets/Save All Assets", priority = 39)]
     public static void SaveAssetAllAssetsCommand()
     {
-        foreach (var obj in Selection.objects)
-        {
-            if (AssetDatabase.IsMainAsset(obj))
-            {
-                AssetDatabase.SaveAssetIfDirty(obj);
-            }
-        }
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
     }
 }
 #endif
