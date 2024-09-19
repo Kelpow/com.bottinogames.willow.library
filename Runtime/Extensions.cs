@@ -99,6 +99,25 @@ namespace Willow.Library
         }
 
         /// <summary>
+        /// Remaps a vector component-wise from oldmin-oldmax to newmin-newmax
+        /// </summary>
+        public static Vector2 Remap(this Vector2 v, Vector2 oldMin, Vector2 oldMax, Vector2 newMin, Vector2 newMax)
+        {
+            return new Vector3(v.x.Remap(oldMin.x, oldMax.x, newMin.x, newMax.x), v.y.Remap(oldMin.y, oldMax.y, newMin.y, newMax.y)); ;
+        }
+
+        /// <summary>
+        /// Remaps a vectors of numbers to 0-1.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="zero">the value which will be remapped to 0</param>
+        /// <param name="one">the value which will be remapped to 1</param>
+        public static Vector2 Remap01(this Vector2 v, Vector2 zero, Vector2 one)
+        {
+            return new Vector2(v.x.Remap01(zero.x, one.x), v.y.Remap01(zero.y, one.y));
+        }
+
+        /// <summary>
         /// Optionally add to any components of a vector.
         /// </summary>
         public static Vector3 Add(this Vector3 v, float x = 0f, float y = 0f, float z = 0f)
