@@ -115,6 +115,44 @@ namespace Willow.Library
             return Mathf.LerpUnclamped(from, to, 1 - Mathf.Exp(-lambda * dt));
         }
 
+
+        /// <summary>
+        /// a frame-independant alternative to Lerp
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="lambda">The strength of the dampening, between 0 and float.PositiveInfinity</param>
+        /// <param name="isRealtime"> Whether the damping should be effected by Time.timeScale</param>
+        /// <returns></returns>
+        public static float DampRadians(float from, float to, float lambda, float dt)
+        {
+            const float tau = Mathf.PI * 2f;
+
+            from = (from + tau) % tau;
+            to = (to + tau) % tau;
+
+            to = Mathf.Abs(from - to) < Mathf.PI ? to :
+                Mathf.Abs(from - to + tau) < Mathf.PI ? to + tau :
+                from - to - tau;
+            return (Mathf.Lerp(from, to, 1 - Mathf.Exp(-lambda * dt)) + tau) % tau;
+        }
+
+        /// <summary>
+        /// a frame-independant alternative to Lerp
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="lambda">The strength of the dampening, between 0 and float.PositiveInfinity</param>
+        /// <param name="isRealtime"> Whether the damping should be effected by Time.timeScale</param>
+        /// <returns></returns>
+        public static float DampRadians(float from, float to, float lambda, bool isRealtime = false)
+        {
+            float dt = isRealtime ? Time.unscaledDeltaTime : Time.deltaTime;
+            return DampRadians(from, to, lambda, dt);
+        }
+
+
+
         /// <summary>
         /// a frame-independant alternative to Slerp
         /// </summary>
