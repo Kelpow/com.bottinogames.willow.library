@@ -128,11 +128,11 @@ namespace Willow.Library
         {
             const float tau = Mathf.PI * 2f;
 
-            from = (from + tau) % tau;
-            to = (to + tau) % tau;
+            from = (from + tau) % tau; // .1 + 1 % 1 = .1
+            to = (to + tau) % tau; // -.1 + 1 % 1 = .9
 
             to = Mathf.Abs(from - to) < Mathf.PI ? to :
-                Mathf.Abs(from - to + tau) < Mathf.PI ? to + tau :
+                Mathf.Abs(from - (to + tau)) < Mathf.PI ? to + tau :
                 to - tau;
             return (Mathf.Lerp(from, to, 1 - Mathf.Exp(-lambda * dt)) + tau) % tau;
         }
