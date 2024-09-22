@@ -133,7 +133,7 @@ namespace Willow.Library
 
             to = Mathf.Abs(from - to) < Mathf.PI ? to :
                 Mathf.Abs(from - to + tau) < Mathf.PI ? to + tau :
-                from - to - tau;
+                to - tau;
             return (Mathf.Lerp(from, to, 1 - Mathf.Exp(-lambda * dt)) + tau) % tau;
         }
 
