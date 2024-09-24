@@ -326,6 +326,7 @@ namespace Willow.IDLUI
                         {
                             if (rem)
                             {
+                                Undo.RecordObject(button, "Edit IDLUI Connections");
                                 button.up = null;
                             }
                             else
@@ -344,6 +345,7 @@ namespace Willow.IDLUI
                         {
                             if (rem)
                             {
+                                Undo.RecordObject(button, "Edit IDLUI Connections");
                                 button.left = null;
                             }
                             else
@@ -356,6 +358,7 @@ namespace Willow.IDLUI
                         {
                             if (rem)
                             {
+                                Undo.RecordObject(button, "Edit IDLUI Connections");
                                 button.right = null;
                             }
                             else
@@ -410,15 +413,19 @@ namespace Willow.IDLUI
                             switch (focusedDirection)
                             {
                                 case UP:
+                                    Undo.RecordObject(focusedButton, "Edit IDLUI Connections");
                                     focusedButton.up = null;
                                     break;
                                 case DOWN:
+                                    Undo.RecordObject(focusedButton, "Edit IDLUI Connections");
                                     focusedButton.down = null;
                                     break;
                                 case LEFT:
+                                    Undo.RecordObject(focusedButton, "Edit IDLUI Connections");
                                     focusedButton.left = null;
                                     break;
                                 case RIGHT:
+                                    Undo.RecordObject(focusedButton, "Edit IDLUI Connections");
                                     focusedButton.right = null;
                                     break;
                             }
@@ -443,21 +450,29 @@ namespace Willow.IDLUI
                             switch (focusedDirection)
                             {
                                 case UP:
+                                    Undo.RecordObject(focusedButton, "Edit IDLUI Connections");
+                                    Undo.RecordObject(button, "Edit IDLUI Connections");
                                     focusedButton.up = button;
                                     button.down = focusedButton;
                                     focusedButton = null;
                                     break;
                                 case DOWN:
+                                    Undo.RecordObject(focusedButton, "Edit IDLUI Connections");
+                                    Undo.RecordObject(button, "Edit IDLUI Connections");
                                     focusedButton.down = button;
                                     button.up = focusedButton;
                                     focusedButton = null;
                                     break;
                                 case LEFT:
+                                    Undo.RecordObject(focusedButton, "Edit IDLUI Connections");
+                                    Undo.RecordObject(button, "Edit IDLUI Connections");
                                     focusedButton.left = button;
                                     button.right = focusedButton;
                                     focusedButton = null;
                                     break;
                                 case RIGHT:
+                                    Undo.RecordObject(focusedButton, "Edit IDLUI Connections");
+                                    Undo.RecordObject(button, "Edit IDLUI Connections");
                                     focusedButton.right = button;
                                     button.left = focusedButton;
                                     focusedButton = null;
@@ -471,18 +486,22 @@ namespace Willow.IDLUI
                             switch (focusedDirection)
                             {
                                 case UP:
+                                    Undo.RecordObject(focusedButton, "Edit IDLUI Connections");
                                     focusedButton.up = button;
                                     focusedButton = null;
                                     break;
                                 case DOWN:
+                                    Undo.RecordObject(focusedButton, "Edit IDLUI Connections");
                                     focusedButton.down = button;
                                     focusedButton = null;
                                     break;
                                 case LEFT:
+                                    Undo.RecordObject(focusedButton, "Edit IDLUI Connections");
                                     focusedButton.left = button;
                                     focusedButton = null;
                                     break;
                                 case RIGHT:
+                                    Undo.RecordObject(focusedButton, "Edit IDLUI Connections");
                                     focusedButton.right = button;
                                     focusedButton = null;
                                     break;
